@@ -1,7 +1,12 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 // Wait https://github.com/facebook/flow/issues/380 to be fixed
 /* eslint-disable flowtype/require-valid-file-annotation */
 
-const deepPurple = {
+var deepPurple = {
   50: '#ede7f6',
   100: '#d1c4e9',
   200: '#b39ddb',
@@ -16,7 +21,7 @@ const deepPurple = {
   A200: '#7c4dff',
   A400: '#651fff',
   A700: '#6200ea',
-  contrastDefaultColor: 'light',
+  contrastDefaultColor: 'light'
 };
 
-export default deepPurple;
+exports.default = deepPurple;

@@ -1,11 +1,27 @@
-// @flow
-/* eslint-disable no-param-reassign */
+'use strict';
 
-import warning from 'warning';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.isNumber = exports.isString = exports.formatMs = exports.duration = exports.easing = undefined;
+
+var _keys = require('babel-runtime/core-js/object/keys');
+
+var _keys2 = _interopRequireDefault(_keys);
+
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+var _warning = require('warning');
+
+var _warning2 = _interopRequireDefault(_warning);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Follow https://material.google.com/motion/duration-easing.html#duration-easing-natural-easing-curves
 // to learn the context in which each easing should be used.
-export const easing = {
+var easing = exports.easing = {
   // This is the most common easing curve.
   easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
   // Objects enter the screen at full velocity from off-screen and
@@ -14,12 +30,15 @@ export const easing = {
   // Objects leave the screen at full velocity. They do not decelerate when off-screen.
   easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
   // The sharp curve is used by objects that may return to the screen at any time.
-  sharp: 'cubic-bezier(0.4, 0, 0.6, 1)',
+  sharp: 'cubic-bezier(0.4, 0, 0.6, 1)'
 };
 
 // Follow https://material.io/guidelines/motion/duration-easing.html#duration-easing-common-durations
 // to learn when use what timing
-export const duration = {
+
+/* eslint-disable no-param-reassign */
+
+var duration = exports.duration = {
   shortest: 150,
   shorter: 200,
   short: 250,
@@ -30,12 +49,18 @@ export const duration = {
   // recommended when something is entering screen
   enteringScreen: 225,
   // recommended when something is leaving screen
-  leavingScreen: 195,
+  leavingScreen: 195
 };
 
-export const formatMs = (milliseconds: number) => `${Math.round(milliseconds)}ms`;
-export const isString = (value: any) => typeof value === 'string';
-export const isNumber = (value: any) => !isNaN(parseFloat(value));
+var formatMs = exports.formatMs = function formatMs(milliseconds) {
+  return Math.round(milliseconds) + 'ms';
+};
+var isString = exports.isString = function isString(value) {
+  return typeof value === 'string';
+};
+var isNumber = exports.isNumber = function isNumber(value) {
+  return !isNaN(parseFloat(value));
+};
 
 /**
  * @param {string|Array} props
@@ -45,49 +70,38 @@ export const isNumber = (value: any) => !isNaN(parseFloat(value));
  * @param {string} param.easing
  * @param {number} param.delay
  */
-export default {
-  easing,
-  duration,
-  create(
-    props: string | Array<string> = ['all'],
-    options: { prop?: string, duration?: number, easing?: string, delay?: number } = {},
-  ) {
-    const {
-      duration: durationOption = duration.standard,
-      easing: easingOption = easing.easeInOut,
-      delay = 0,
-      ...other
-    } = options;
+exports.default = {
+  easing: easing,
+  duration: duration,
+  create: function create() {
+    var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ['all'];
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var _options$duration = options.duration,
+        durationOption = _options$duration === undefined ? duration.standard : _options$duration,
+        _options$easing = options.easing,
+        easingOption = _options$easing === undefined ? easing.easeInOut : _options$easing,
+        _options$delay = options.delay,
+        delay = _options$delay === undefined ? 0 : _options$delay,
+        other = (0, _objectWithoutProperties3.default)(options, ['duration', 'easing', 'delay']);
 
-    warning(
-      isString(props) || Array.isArray(props),
-      'Material-UI: argument "props" must be a string or Array',
-    );
-    warning(
-      isNumber(durationOption),
-      `Material-UI: argument "duration" must be a number but found ${durationOption}`,
-    );
-    warning(isString(easingOption), 'Material-UI: argument "easing" must be a string');
-    warning(isNumber(delay), 'Material-UI: argument "delay" must be a string');
-    warning(
-      Object.keys(other).length === 0,
-      `Material-UI: unrecognized argument(s) [${Object.keys(other).join(',')}]`,
-    );
 
-    return (Array.isArray(props) ? props : [props])
-      .map(
-        animatedProp =>
-          `${animatedProp} ${formatMs(durationOption)} ${easingOption} ${formatMs(delay)}`,
-      )
-      .join(',');
+    process.env.NODE_ENV !== "production" ? (0, _warning2.default)(isString(props) || Array.isArray(props), 'Material-UI: argument "props" must be a string or Array') : void 0;
+    process.env.NODE_ENV !== "production" ? (0, _warning2.default)(isNumber(durationOption), 'Material-UI: argument "duration" must be a number but found ' + durationOption) : void 0;
+    process.env.NODE_ENV !== "production" ? (0, _warning2.default)(isString(easingOption), 'Material-UI: argument "easing" must be a string') : void 0;
+    process.env.NODE_ENV !== "production" ? (0, _warning2.default)(isNumber(delay), 'Material-UI: argument "delay" must be a string') : void 0;
+    process.env.NODE_ENV !== "production" ? (0, _warning2.default)((0, _keys2.default)(other).length === 0, 'Material-UI: unrecognized argument(s) [' + (0, _keys2.default)(other).join(',') + ']') : void 0;
+
+    return (Array.isArray(props) ? props : [props]).map(function (animatedProp) {
+      return animatedProp + ' ' + formatMs(durationOption) + ' ' + easingOption + ' ' + formatMs(delay);
+    }).join(',');
   },
-  getAutoHeightDuration(height: ?number) {
+  getAutoHeightDuration: function getAutoHeightDuration(height) {
     if (!height) {
       return 0;
     }
 
-    const constant = height / 36;
+    var constant = height / 36;
 
-    return Math.round((4 + 15 * constant ** 0.25 + constant / 5) * 10);
-  },
+    return Math.round((4 + 15 * Math.pow(constant, 0.25) + constant / 5) * 10);
+  }
 };

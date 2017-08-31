@@ -1,7 +1,12 @@
-// @flow
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 
 // Needed as the zIndex works with absolute values.
-export default {
+exports.default = {
   mobileStepper: 900,
   menu: 1000,
   appBar: 1100,
@@ -12,5 +17,5 @@ export default {
   layer: 2000,
   popover: 2100,
   snackbar: 2900,
-  tooltip: 3000,
+  tooltip: 3000
 };

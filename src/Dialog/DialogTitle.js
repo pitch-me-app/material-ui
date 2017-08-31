@@ -1,52 +1,91 @@
-// @flow weak
+'use strict';
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import withStyles from '../styles/withStyles';
-import Typography from '../Typography';
-
-export const styles = (theme: Object) => ({
-  root: {
-    margin: 0,
-    padding: `${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px \
-      20px ${theme.spacing.unit * 3}px`,
-    flex: '0 0 auto',
-  },
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
+exports.styles = undefined;
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _withStyles = require('../styles/withStyles');
+
+var _withStyles2 = _interopRequireDefault(_withStyles);
+
+var _Typography = require('../Typography');
+
+var _Typography2 = _interopRequireDefault(_Typography);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var styles = exports.styles = function styles(theme) {
+  return {
+    root: {
+      margin: 0,
+      padding: theme.spacing.unit * 3 + 'px ' + theme.spacing.unit * 3 + 'px       20px ' + theme.spacing.unit * 3 + 'px',
+      flex: '0 0 auto'
+    }
+  };
+}; //  weak
 
 function DialogTitle(props) {
-  const { children, classes, className, disableTypography, ...other } = props;
+  var children = props.children,
+      classes = props.classes,
+      className = props.className,
+      disableTypography = props.disableTypography,
+      other = (0, _objectWithoutProperties3.default)(props, ['children', 'classes', 'className', 'disableTypography']);
 
-  return (
-    <div data-mui-test="DialogTitle" className={classNames(classes.root, className)} {...other}>
-      {disableTypography ? children : <Typography type="title">{children}</Typography>}
-    </div>
+
+  return _react2.default.createElement(
+    'div',
+    (0, _extends3.default)({ className: (0, _classnames2.default)(classes.root, className) }, other),
+    disableTypography ? children : _react2.default.createElement(
+      _Typography2.default,
+      { type: 'title' },
+      children
+    )
   );
 }
 
-DialogTitle.propTypes = {
+DialogTitle.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The content of the component.
    */
-  children: PropTypes.node,
+  children: _propTypes2.default.node,
   /**
    * Useful to extend the style applied to components.
    */
-  classes: PropTypes.object.isRequired,
+  classes: _propTypes2.default.object.isRequired,
   /**
    * @ignore
    */
-  className: PropTypes.string,
+  className: _propTypes2.default.string,
   /**
    * If `true`, the children won't be wrapped by a typography component.
    * For instance, that can be useful to can render an h4 instead of a
    */
-  disableTypography: PropTypes.bool,
-};
+  disableTypography: _propTypes2.default.bool
+} : {};
 
 DialogTitle.defaultProps = {
-  disableTypography: false,
+  disableTypography: false
 };
 
-export default withStyles(styles, { name: 'MuiDialogTitle' })(DialogTitle);
+exports.default = (0, _withStyles2.default)(styles, { name: 'MuiDialogTitle' })(DialogTitle);

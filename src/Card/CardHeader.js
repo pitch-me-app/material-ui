@@ -1,85 +1,123 @@
-// @flow
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.styles = undefined;
+
+var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+var _ref;
 // @inheritedComponent CardContent
 
-import React from 'react';
-import type { Node } from 'react';
-import classNames from 'classnames';
-import withStyles from '../styles/withStyles';
-import Typography from '../Typography';
-import CardContent from './CardContent';
+var _react = require('react');
 
-export const styles = (theme: Object) => ({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  avatar: {
-    flex: '0 0 auto',
-    marginRight: theme.spacing.unit * 2,
-  },
-  content: {
-    flex: '1 1 auto',
-  },
-  title: {},
-  subheader: {},
-});
+var _react2 = _interopRequireDefault(_react);
 
-type DefaultProps = {
-  classes: Object,
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _withStyles = require('../styles/withStyles');
+
+var _withStyles2 = _interopRequireDefault(_withStyles);
+
+var _Typography = require('../Typography');
+
+var _Typography2 = _interopRequireDefault(_Typography);
+
+var _CardContent = require('./CardContent');
+
+var _CardContent2 = _interopRequireDefault(_CardContent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var babelPluginFlowReactPropTypes_proptype_Node = require('react').babelPluginFlowReactPropTypes_proptype_Node || require('prop-types').any;
+
+var styles = exports.styles = function styles(theme) {
+  return {
+    root: {
+      display: 'flex',
+      alignItems: 'center'
+    },
+    avatar: {
+      flex: '0 0 auto',
+      marginRight: theme.spacing.unit * 2
+    },
+    content: {
+      flex: '1 1 auto'
+    },
+    title: {},
+    subheader: {}
+  };
 };
 
-export type Props = {
-  /**
-   * The Avatar for the Card Header.
-   */
-  avatar?: Node,
-  /**
-   * Useful to extend the style applied to components.
-   */
-  classes?: Object,
-  /**
-   * @ignore
-   */
-  className?: string,
-  /**
-   * The content of the component.
-   */
-  subheader?: Node,
-  /**
-   * The content of the Card Title.
-   */
-  title?: Node,
+var babelPluginFlowReactPropTypes_proptype_Props = {
+  avatar: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node),
+  classes: require('prop-types').object,
+  className: require('prop-types').string,
+  subheader: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node),
+  title: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node)
 };
 
-type AllProps = DefaultProps & Props;
 
-function CardHeader(props: AllProps) {
-  const { avatar, classes, className: classNameProp, subheader, title, ...other } = props;
+function CardHeader(props) {
+  var avatar = props.avatar,
+      classes = props.classes,
+      classNameProp = props.className,
+      subheader = props.subheader,
+      title = props.title,
+      other = (0, _objectWithoutProperties3.default)(props, ['avatar', 'classes', 'className', 'subheader', 'title']);
 
-  const className = classNames(classes.root, classNameProp);
+
+  var className = (0, _classnames2.default)(classes.root, classNameProp);
 
   // Adjustments that depend on the presence of an avatar
-  const titleType = avatar ? 'body2' : 'headline';
-  const subheaderType = avatar ? 'body2' : 'body1';
+  var titleType = avatar ? 'body2' : 'headline';
+  var subheaderType = avatar ? 'body2' : 'body1';
 
-  return (
-    <CardContent className={className} {...other}>
-      {avatar && <div className={classes.avatar}>{avatar}</div>}
-      <div className={classes.content}>
-        <Typography type={titleType} component="span" className={classes.title}>
-          {title}
-        </Typography>
-        <Typography
-          type={subheaderType}
-          component="span"
-          color="secondary"
-          className={classes.subheader}
-        >
-          {subheader}
-        </Typography>
-      </div>
-    </CardContent>
+  return _react2.default.createElement(
+    _CardContent2.default,
+    (0, _extends3.default)({ className: className }, other),
+    avatar && _react2.default.createElement(
+      'div',
+      { className: classes.avatar },
+      avatar
+    ),
+    _react2.default.createElement(
+      'div',
+      { className: classes.content },
+      _react2.default.createElement(
+        _Typography2.default,
+        { type: titleType, component: 'span', className: classes.title },
+        title
+      ),
+      _react2.default.createElement(
+        _Typography2.default,
+        {
+          type: subheaderType,
+          component: 'span',
+          color: 'secondary',
+          className: classes.subheader
+        },
+        subheader
+      )
+    )
   );
 }
 
-export default withStyles(styles, { name: 'MuiCardHeader' })(CardHeader);
+CardHeader.propTypes = process.env.NODE_ENV !== "production" ? (_ref = {
+  classes: require('prop-types').object.isRequired,
+  avatar: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node)
+}, (0, _defineProperty3.default)(_ref, 'classes', require('prop-types').object), (0, _defineProperty3.default)(_ref, 'className', require('prop-types').string), (0, _defineProperty3.default)(_ref, 'subheader', typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node)), (0, _defineProperty3.default)(_ref, 'title', typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node)), _ref) : {};
+exports.default = (0, _withStyles2.default)(styles, { name: 'MuiCardHeader' })(CardHeader);

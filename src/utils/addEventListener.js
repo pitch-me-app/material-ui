@@ -1,13 +1,24 @@
-// @flow
+'use strict';
 
-import addEventListener from 'dom-helpers/events/on';
-import removeEventListener from 'dom-helpers/events/off';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-export default function(node: Node, event: string, handler: EventHandler, capture?: boolean) {
-  addEventListener(node, event, handler, capture);
+exports.default = function (node, event, handler, capture) {
+  (0, _on2.default)(node, event, handler, capture);
   return {
-    remove() {
-      removeEventListener(node, event, handler, capture);
-    },
+    remove: function remove() {
+      (0, _off2.default)(node, event, handler, capture);
+    }
   };
-}
+};
+
+var _on = require('dom-helpers/events/on');
+
+var _on2 = _interopRequireDefault(_on);
+
+var _off = require('dom-helpers/events/off');
+
+var _off2 = _interopRequireDefault(_off);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

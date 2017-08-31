@@ -1,96 +1,98 @@
-// @flow
+'use strict';
 
-import React from 'react';
-import type { ComponentType } from 'react';
-import classNames from 'classnames';
-import warning from 'warning';
-import withStyles from '../styles/withStyles';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.styles = undefined;
 
-export const styles = (theme: Object) => {
-  const shadows = {};
+var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
-  theme.shadows.forEach((shadow, index) => {
-    shadows[`shadow${index}`] = {
-      boxShadow: shadow,
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _ref;
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _warning = require('warning');
+
+var _warning2 = _interopRequireDefault(_warning);
+
+var _withStyles = require('../styles/withStyles');
+
+var _withStyles2 = _interopRequireDefault(_withStyles);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var babelPluginFlowReactPropTypes_proptype_ComponentType = require('prop-types').func;
+
+var styles = exports.styles = function styles(theme) {
+  var shadows = {};
+
+  theme.shadows.forEach(function (shadow, index) {
+    shadows['shadow' + index] = {
+      boxShadow: shadow
     };
   });
 
-  return {
+  return (0, _extends3.default)({
     root: {
-      backgroundColor: theme.palette.background.paper,
+      backgroundColor: theme.palette.background.paper
     },
     rounded: {
-      borderRadius: 2,
-    },
-    ...shadows,
-  };
+      borderRadius: 2
+    }
+  }, shadows);
 };
 
-type DefaultProps = {
-  classes: Object,
-  component: string,
-  elevation: number,
-  square: boolean,
+var babelPluginFlowReactPropTypes_proptype_Props = {
+  classes: require('prop-types').object,
+  className: require('prop-types').string,
+  component: require('prop-types').oneOfType([require('prop-types').string, typeof babelPluginFlowReactPropTypes_proptype_ComponentType === 'function' ? babelPluginFlowReactPropTypes_proptype_ComponentType : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_ComponentType)]),
+  elevation: require('prop-types').number,
+  square: require('prop-types').bool
 };
 
-export type Props = {
-  /**
-   * Useful to extend the style applied to components.
-   */
-  classes?: Object,
-  /**
-   * @ignore
-   */
-  className?: string,
-  /**
-   * The component used for the root node.
-   * Either a string to use a DOM element or a component.
-   */
-  component?: string | ComponentType<*>,
-  /**
-   * Shadow depth, corresponds to `dp` in the spec.
-   * It's accepting values between 0 and 24 inclusive.
-   */
-  elevation?: number,
-  /**
-   * If `true`, rounded corners are disabled.
-   */
-  square?: boolean,
-};
 
-type AllProps = DefaultProps & Props;
+function Paper(props) {
+  var classes = props.classes,
+      classNameProp = props.className,
+      ComponentProp = props.component,
+      square = props.square,
+      elevation = props.elevation,
+      other = (0, _objectWithoutProperties3.default)(props, ['classes', 'className', 'component', 'square', 'elevation']);
 
-function Paper(props: AllProps) {
-  const {
-    classes,
-    className: classNameProp,
-    component: ComponentProp,
-    square,
-    elevation,
-    ...other
-  } = props;
 
-  warning(
-    elevation >= 0 && elevation < 25,
-    `Material-UI: this elevation \`${elevation}\` is not implemented.`,
-  );
+  process.env.NODE_ENV !== "production" ? (0, _warning2.default)(elevation >= 0 && elevation < 25, 'Material-UI: this elevation `' + elevation + '` is not implemented.') : void 0;
 
-  const className = classNames(
-    classes.root,
-    classes[`shadow${elevation >= 0 ? elevation : 0}`],
-    {
-      [classes.rounded]: !square,
-    },
-    classNameProp,
-  );
+  var className = (0, _classnames2.default)(classes.root, classes['shadow' + (elevation >= 0 ? elevation : 0)], (0, _defineProperty3.default)({}, classes.rounded, !square), classNameProp);
 
-  return <ComponentProp className={className} {...other} />;
+  return _react2.default.createElement(ComponentProp, (0, _extends3.default)({ className: className }, other));
 }
 
+Paper.propTypes = process.env.NODE_ENV !== "production" ? (_ref = {
+  classes: require('prop-types').object.isRequired,
+  component: require('prop-types').string.isRequired,
+  elevation: require('prop-types').number.isRequired,
+  square: require('prop-types').bool.isRequired
+}, (0, _defineProperty3.default)(_ref, 'classes', require('prop-types').object), (0, _defineProperty3.default)(_ref, 'className', require('prop-types').string), (0, _defineProperty3.default)(_ref, 'component', require('prop-types').oneOfType([require('prop-types').string, typeof babelPluginFlowReactPropTypes_proptype_ComponentType === 'function' ? babelPluginFlowReactPropTypes_proptype_ComponentType : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_ComponentType)])), (0, _defineProperty3.default)(_ref, 'elevation', require('prop-types').number), (0, _defineProperty3.default)(_ref, 'square', require('prop-types').bool), _ref) : {};
 Paper.defaultProps = {
   component: 'div',
   elevation: 2,
-  square: false,
+  square: false
 };
 
-export default withStyles(styles, { name: 'MuiPaper' })(Paper);
+exports.default = (0, _withStyles2.default)(styles, { name: 'MuiPaper' })(Paper);

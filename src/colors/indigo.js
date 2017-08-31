@@ -1,7 +1,12 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 // Wait https://github.com/facebook/flow/issues/380 to be fixed
 /* eslint-disable flowtype/require-valid-file-annotation */
 
-const indigo = {
+var indigo = {
   50: '#e8eaf6',
   100: '#c5cae9',
   200: '#9fa8da',
@@ -16,7 +21,7 @@ const indigo = {
   A200: '#536dfe',
   A400: '#3d5afe',
   A700: '#304ffe',
-  contrastDefaultColor: 'light',
+  contrastDefaultColor: 'light'
 };
 
-export default indigo;
+exports.default = indigo;

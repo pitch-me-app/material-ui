@@ -1,16 +1,71 @@
-// @flow
+'use strict';
 
-import React from 'react';
-import classnames from 'classnames';
-import debounce from 'lodash/debounce';
-import EventListener from 'react-event-listener';
-import withStyles from '../styles/withStyles';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.styles = undefined;
 
-const rowsHeight = 24;
+var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
-export const styles = {
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = require('babel-runtime/helpers/inherits');
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _ref2, _ref3;
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _debounce = require('lodash/debounce');
+
+var _debounce2 = _interopRequireDefault(_debounce);
+
+var _reactEventListener = require('react-event-listener');
+
+var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
+
+var _withStyles = require('../styles/withStyles');
+
+var _withStyles2 = _interopRequireDefault(_withStyles);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var rowsHeight = 24;
+
+var styles = exports.styles = {
   root: {
-    position: 'relative', // because the shadow has position: 'absolute',
+    position: 'relative' // because the shadow has position: 'absolute',
   },
   textarea: {
     width: '100%',
@@ -23,7 +78,7 @@ export const styles = {
     lineHeight: 'inherit',
     border: 'none',
     outline: 'none',
-    background: 'transparent',
+    background: 'transparent'
   },
   shadow: {
     resize: 'none',
@@ -34,211 +89,184 @@ export const styles = {
     visibility: 'hidden',
     position: 'absolute',
     height: 'auto',
-    whiteSpace: 'pre-wrap',
-  },
+    whiteSpace: 'pre-wrap'
+  }
 };
 
-type DefaultProps = {
-  classes: Object,
+var babelPluginFlowReactPropTypes_proptype_Props = {
+  classes: require('prop-types').object,
+  className: require('prop-types').string,
+  defaultValue: require('prop-types').string,
+  disabled: require('prop-types').bool,
+  onChange: require('prop-types').func,
+  rows: require('prop-types').oneOfType([require('prop-types').string, require('prop-types').number]),
+  rowsMax: require('prop-types').oneOfType([require('prop-types').string, require('prop-types').number]),
+  textareaRef: require('prop-types').func,
+  value: require('prop-types').string
 };
 
-export type Props = {
-  /**
-   * Useful to extend the style applied to components.
-   */
-  classes?: Object,
-  /**
-   * @ignore
-   */
-  className?: string,
-  /**
-   * @ignore
-   */
-  defaultValue?: string,
-  /**
-   * @ignore
-   */
-  disabled?: boolean,
-  /**
-   * @ignore
-   */
-  onChange?: Function,
-  /**
-   * Number of rows to display when multiline option is set to true.
-   */
-  rows?: string | number,
-  /**
-   * Maximum number of rows to display when multiline option is set to true.
-   */
-  rowsMax?: string | number,
-  /**
-   * Use that property to pass a ref callback to the native textarea component.
-   */
-  textareaRef?: Function,
-  /**
-   * @ignore
-   */
-  value?: string,
+var Textarea = function (_React$Component) {
+  (0, _inherits3.default)(Textarea, _React$Component);
+
+  function Textarea() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    (0, _classCallCheck3.default)(this, Textarea);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Textarea.__proto__ || (0, _getPrototypeOf2.default)(Textarea)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      height: null
+    }, _this.handleResize = (0, _debounce2.default)(function (event) {
+      _this.syncHeightWithShadow(event);
+    }, 166), _this.handleRefInput = function (node) {
+      _this.input = node;
+      if (_this.props.textareaRef) {
+        _this.props.textareaRef(node);
+      }
+    }, _this.handleRefSinglelineShadow = function (node) {
+      _this.singlelineShadow = node;
+    }, _this.handleRefShadow = function (node) {
+      _this.shadow = node;
+    }, _this.handleChange = function (event) {
+      _this.value = event.target.value;
+
+      if (typeof _this.props.value === 'undefined' && _this.shadow) {
+        // The component is not controlled, we need to update the shallow value.
+        _this.shadow.value = _this.value;
+        _this.syncHeightWithShadow(event);
+      }
+
+      if (_this.props.onChange) {
+        _this.props.onChange(event);
+      }
+    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
+  }
+
+  (0, _createClass3.default)(Textarea, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      // <Input> expects the components it renders to respond to 'value'
+      // so that it can check whether they are dirty
+      this.value = this.props.value || this.props.defaultValue || '';
+      this.setState({
+        height: Number(this.props.rows) * rowsHeight
+      });
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.syncHeightWithShadow(null);
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.value !== this.props.value || Number(nextProps.rowsMax) !== Number(this.props.rowsMax)) {
+        this.syncHeightWithShadow(null, nextProps);
+      }
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.handleResize.cancel();
+    }
+  }, {
+    key: 'syncHeightWithShadow',
+    value: function syncHeightWithShadow(event) {
+      var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.props;
+
+      if (this.shadow && this.singlelineShadow) {
+        // The component is controlled, we need to update the shallow value.
+        if (typeof this.props.value !== 'undefined') {
+          this.shadow.value = props.value || '';
+        }
+
+        var lineHeight = this.singlelineShadow.scrollHeight;
+        var newHeight = this.shadow.scrollHeight;
+
+        // Guarding for jsdom, where scrollHeight isn't present.
+        // See https://github.com/tmpvar/jsdom/issues/1013
+        if (newHeight === undefined) {
+          return;
+        }
+
+        if (Number(props.rowsMax) >= Number(props.rows)) {
+          newHeight = Math.min(Number(props.rowsMax) * lineHeight, newHeight);
+        }
+
+        newHeight = Math.max(newHeight, lineHeight);
+
+        if (this.state.height !== newHeight) {
+          this.setState({
+            height: newHeight
+          });
+        }
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          classes = _props.classes,
+          className = _props.className,
+          defaultValue = _props.defaultValue,
+          onChange = _props.onChange,
+          rows = _props.rows,
+          rowsMax = _props.rowsMax,
+          textareaRef = _props.textareaRef,
+          value = _props.value,
+          other = (0, _objectWithoutProperties3.default)(_props, ['classes', 'className', 'defaultValue', 'onChange', 'rows', 'rowsMax', 'textareaRef', 'value']);
+
+
+      return _react2.default.createElement(
+        'div',
+        { className: classes.root, style: { height: this.state.height } },
+        _react2.default.createElement(_reactEventListener2.default, { target: 'window', onResize: this.handleResize }),
+        _react2.default.createElement('textarea', {
+          ref: this.handleRefSinglelineShadow,
+          className: (0, _classnames2.default)(classes.shadow, classes.textarea),
+          tabIndex: '-1',
+          rows: '1',
+          readOnly: true,
+          'aria-hidden': 'true',
+          value: ''
+        }),
+        _react2.default.createElement('textarea', {
+          ref: this.handleRefShadow,
+          className: (0, _classnames2.default)(classes.shadow, classes.textarea),
+          tabIndex: '-1',
+          rows: rows,
+          'aria-hidden': 'true',
+          readOnly: true,
+          defaultValue: defaultValue,
+          value: value
+        }),
+        _react2.default.createElement('textarea', (0, _extends3.default)({
+          ref: this.handleRefInput,
+          rows: rows,
+          className: (0, _classnames2.default)(classes.textarea, className),
+          defaultValue: defaultValue,
+          value: value,
+          onChange: this.handleChange
+        }, other))
+      );
+    }
+  }]);
+  return Textarea;
+}(_react2.default.Component);
+
+Textarea.defaultProps = {
+  classes: {},
+  rows: 1
 };
-
-type AllProps = DefaultProps & Props;
-
-type State = {
-  height: ?number,
-};
-
-class Textarea extends React.Component<AllProps, State> {
-  props: AllProps;
-  shadow: ?HTMLInputElement;
-  singlelineShadow: ?HTMLInputElement;
-  input: ?HTMLInputElement;
-  value: string;
-
-  static defaultProps = {
-    classes: {},
-    rows: 1,
-  };
-
-  state = {
-    height: null,
-  };
-
-  componentWillMount() {
-    // <Input> expects the components it renders to respond to 'value'
-    // so that it can check whether they are dirty
-    this.value = this.props.value || this.props.defaultValue || '';
-    this.setState({
-      height: Number(this.props.rows) * rowsHeight,
-    });
-  }
-
-  componentDidMount() {
-    this.syncHeightWithShadow(null);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.value !== this.props.value ||
-      Number(nextProps.rowsMax) !== Number(this.props.rowsMax)
-    ) {
-      this.syncHeightWithShadow(null, nextProps);
-    }
-  }
-
-  componentWillUnmount() {
-    this.handleResize.cancel();
-  }
-
-  handleResize = debounce(event => {
-    this.syncHeightWithShadow(event);
-  }, 166);
-
-  syncHeightWithShadow(event, props = this.props) {
-    if (this.shadow && this.singlelineShadow) {
-      // The component is controlled, we need to update the shallow value.
-      if (typeof this.props.value !== 'undefined') {
-        this.shadow.value = props.value || '';
-      }
-
-      const lineHeight = this.singlelineShadow.scrollHeight;
-      let newHeight = this.shadow.scrollHeight;
-
-      // Guarding for jsdom, where scrollHeight isn't present.
-      // See https://github.com/tmpvar/jsdom/issues/1013
-      if (newHeight === undefined) {
-        return;
-      }
-
-      if (Number(props.rowsMax) >= Number(props.rows)) {
-        newHeight = Math.min(Number(props.rowsMax) * lineHeight, newHeight);
-      }
-
-      newHeight = Math.max(newHeight, lineHeight);
-
-      if (this.state.height !== newHeight) {
-        this.setState({
-          height: newHeight,
-        });
-      }
-    }
-  }
-
-  handleRefInput = node => {
-    this.input = node;
-    if (this.props.textareaRef) {
-      this.props.textareaRef(node);
-    }
-  };
-
-  handleRefSinglelineShadow = node => {
-    this.singlelineShadow = node;
-  };
-
-  handleRefShadow = node => {
-    this.shadow = node;
-  };
-
-  handleChange = (event: SyntheticInputEvent<HTMLInputElement>) => {
-    this.value = event.target.value;
-
-    if (typeof this.props.value === 'undefined' && this.shadow) {
-      // The component is not controlled, we need to update the shallow value.
-      this.shadow.value = this.value;
-      this.syncHeightWithShadow(event);
-    }
-
-    if (this.props.onChange) {
-      this.props.onChange(event);
-    }
-  };
-
-  render() {
-    const {
-      classes,
-      className,
-      defaultValue,
-      onChange,
-      rows,
-      rowsMax,
-      textareaRef,
-      value,
-      ...other
-    } = this.props;
-
-    return (
-      <div className={classes.root} style={{ height: this.state.height }}>
-        <EventListener target="window" onResize={this.handleResize} />
-        <textarea
-          ref={this.handleRefSinglelineShadow}
-          className={classnames(classes.shadow, classes.textarea)}
-          tabIndex="-1"
-          rows="1"
-          readOnly
-          aria-hidden="true"
-          value=""
-        />
-        <textarea
-          ref={this.handleRefShadow}
-          className={classnames(classes.shadow, classes.textarea)}
-          tabIndex="-1"
-          rows={rows}
-          aria-hidden="true"
-          readOnly
-          defaultValue={defaultValue}
-          value={value}
-        />
-        <textarea
-          ref={this.handleRefInput}
-          rows={rows}
-          className={classnames(classes.textarea, className)}
-          defaultValue={defaultValue}
-          value={value}
-          onChange={this.handleChange}
-          {...other}
-        />
-      </div>
-    );
-  }
-}
-
-export default withStyles(styles, { name: 'MuiTextarea' })(Textarea);
+Textarea.propTypes = process.env.NODE_ENV !== "production" ? (_ref2 = {
+  classes: require('prop-types').object.isRequired
+}, (0, _defineProperty3.default)(_ref2, 'classes', require('prop-types').object), (0, _defineProperty3.default)(_ref2, 'className', require('prop-types').string), (0, _defineProperty3.default)(_ref2, 'defaultValue', require('prop-types').string), (0, _defineProperty3.default)(_ref2, 'disabled', require('prop-types').bool), (0, _defineProperty3.default)(_ref2, 'onChange', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'rows', require('prop-types').oneOfType([require('prop-types').string, require('prop-types').number])), (0, _defineProperty3.default)(_ref2, 'rowsMax', require('prop-types').oneOfType([require('prop-types').string, require('prop-types').number])), (0, _defineProperty3.default)(_ref2, 'textareaRef', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'value', require('prop-types').string), _ref2) : {};
+Textarea.propTypes = process.env.NODE_ENV !== "production" ? (_ref3 = {
+  classes: require('prop-types').object.isRequired
+}, (0, _defineProperty3.default)(_ref3, 'classes', require('prop-types').object), (0, _defineProperty3.default)(_ref3, 'className', require('prop-types').string), (0, _defineProperty3.default)(_ref3, 'defaultValue', require('prop-types').string), (0, _defineProperty3.default)(_ref3, 'disabled', require('prop-types').bool), (0, _defineProperty3.default)(_ref3, 'onChange', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'rows', require('prop-types').oneOfType([require('prop-types').string, require('prop-types').number])), (0, _defineProperty3.default)(_ref3, 'rowsMax', require('prop-types').oneOfType([require('prop-types').string, require('prop-types').number])), (0, _defineProperty3.default)(_ref3, 'textareaRef', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'value', require('prop-types').string), _ref3) : {};
+exports.default = (0, _withStyles2.default)(styles, { name: 'MuiTextarea' })(Textarea);

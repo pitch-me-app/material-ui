@@ -1,34 +1,53 @@
-// @flow
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Paper = require('../Paper');
+
+var _Paper2 = _interopRequireDefault(_Paper);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 // @inheritedComponent Paper
 
-import React from 'react';
-import Paper from '../Paper';
-
-type DefaultProps = {
-  raised: boolean,
+var babelPluginFlowReactPropTypes_proptype_Props = {
+  className: require('prop-types').string,
+  raised: require('prop-types').bool
 };
 
-export type Props = {
-  /**
-   * @ignore
-   */
-  className?: string,
-  /**
-   * If `true`, the card will use raised styling.
-   */
-  raised?: boolean,
-};
 
-type AllProps = DefaultProps & Props;
+function Card(props) {
+  var raised = props.raised,
+      other = (0, _objectWithoutProperties3.default)(props, ['raised']);
 
-function Card(props: AllProps) {
-  const { raised, ...other } = props;
 
-  return <Paper elevation={raised ? 8 : 2} {...other} />;
+  return _react2.default.createElement(_Paper2.default, (0, _extends3.default)({ elevation: raised ? 8 : 2 }, other));
 }
 
+Card.propTypes = process.env.NODE_ENV !== "production" ? (0, _defineProperty3.default)({
+  raised: require('prop-types').bool.isRequired,
+  className: require('prop-types').string
+}, 'raised', require('prop-types').bool) : {};
 Card.defaultProps = {
-  raised: false,
+  raised: false
 };
 
-export default Card;
+exports.default = Card;

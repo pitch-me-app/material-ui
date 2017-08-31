@@ -1,91 +1,126 @@
-// @flow
+'use strict';
 
-import React from 'react';
-import type { Node } from 'react';
-import classNames from 'classnames';
-import withStyles from '../styles/withStyles';
-import Paper from '../Paper';
-import Typography from '../Typography';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.styles = undefined;
 
-export const styles = (theme: Object) => {
-  const type = theme.palette.type === 'light' ? 'dark' : 'light';
-  const backgroundColor = theme.palette.shades[type].background.default;
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _ref;
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _withStyles = require('../styles/withStyles');
+
+var _withStyles2 = _interopRequireDefault(_withStyles);
+
+var _Paper = require('../Paper');
+
+var _Paper2 = _interopRequireDefault(_Paper);
+
+var _Typography = require('../Typography');
+
+var _Typography2 = _interopRequireDefault(_Typography);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var babelPluginFlowReactPropTypes_proptype_Node = require('react').babelPluginFlowReactPropTypes_proptype_Node || require('prop-types').any;
+
+var styles = exports.styles = function styles(theme) {
+  var _root;
+
+  var type = theme.palette.type === 'light' ? 'dark' : 'light';
+  var backgroundColor = theme.palette.shades[type].background.default;
 
   return {
-    root: {
+    root: (_root = {
       pointerEvents: 'initial',
       color: theme.palette.getContrastText(backgroundColor),
-      backgroundColor,
+      backgroundColor: backgroundColor,
       display: 'flex',
       alignItems: 'center',
       flexWrap: 'wrap',
-      padding: `6px ${theme.spacing.unit * 3}px`,
-      [theme.breakpoints.up('md')]: {
-        minWidth: 288,
-        maxWidth: 568,
-        borderRadius: 2,
-      },
-      [theme.breakpoints.down('md')]: {
-        flexGrow: 1,
-      },
-    },
+      padding: '6px ' + theme.spacing.unit * 3 + 'px'
+    }, (0, _defineProperty3.default)(_root, theme.breakpoints.up('md'), {
+      minWidth: 288,
+      maxWidth: 568,
+      borderRadius: 2
+    }), (0, _defineProperty3.default)(_root, theme.breakpoints.down('md'), {
+      flexGrow: 1
+    }), _root),
     message: {
-      padding: `${theme.spacing.unit}px 0`,
+      padding: theme.spacing.unit + 'px 0'
     },
     action: {
       display: 'flex',
       alignItems: 'center',
       marginLeft: 'auto',
       paddingLeft: theme.spacing.unit * 3,
-      marginRight: -theme.spacing.unit,
-    },
+      marginRight: -theme.spacing.unit
+    }
   };
 };
 
-type DefaultProps = {
-  classes: Object,
+var babelPluginFlowReactPropTypes_proptype_Props = {
+  action: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node),
+  classes: require('prop-types').object,
+  className: require('prop-types').string,
+  message: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node.isRequired ? babelPluginFlowReactPropTypes_proptype_Node.isRequired : babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node).isRequired
 };
 
-export type Props = {
-  /**
-   * The action to display.
-   */
-  action?: Node,
-  /**
-   * Useful to extend the style applied to components.
-   */
-  classes?: Object,
-  /**
-   * @ignore
-   */
-  className?: string,
-  /**
-   * The message to display.
-   */
-  message: Node,
-};
 
-type AllProps = DefaultProps & Props;
+function SnackbarContent(props) {
+  var action = props.action,
+      classes = props.classes,
+      className = props.className,
+      message = props.message,
+      other = (0, _objectWithoutProperties3.default)(props, ['action', 'classes', 'className', 'message']);
 
-function SnackbarContent(props: AllProps) {
-  const { action, classes, className, message, ...other } = props;
 
-  return (
-    <Paper
-      component={Typography}
-      headlineMapping={{
-        body1: 'div',
-      }}
-      role="alertdialog"
-      square
-      elevation={6}
-      className={classNames(classes.root, className)}
-      {...other}
-    >
-      <div className={classes.message}>{message}</div>
-      {action ? <div className={classes.action}>{action}</div> : null}
-    </Paper>
+  return _react2.default.createElement(
+    _Paper2.default,
+    (0, _extends3.default)({
+      component: _Typography2.default,
+      headlineMapping: {
+        body1: 'div'
+      },
+      role: 'alertdialog',
+      square: true,
+      elevation: 6,
+      className: (0, _classnames2.default)(classes.root, className)
+    }, other),
+    _react2.default.createElement(
+      'div',
+      { className: classes.message },
+      message
+    ),
+    action ? _react2.default.createElement(
+      'div',
+      { className: classes.action },
+      action
+    ) : null
   );
 }
 
-export default withStyles(styles, { name: 'MuiSnackbarContent' })(SnackbarContent);
+SnackbarContent.propTypes = process.env.NODE_ENV !== "production" ? (_ref = {
+  classes: require('prop-types').object.isRequired,
+  action: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node)
+}, (0, _defineProperty3.default)(_ref, 'classes', require('prop-types').object), (0, _defineProperty3.default)(_ref, 'className', require('prop-types').string), (0, _defineProperty3.default)(_ref, 'message', typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node.isRequired ? babelPluginFlowReactPropTypes_proptype_Node.isRequired : babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node).isRequired), _ref) : {};
+exports.default = (0, _withStyles2.default)(styles, { name: 'MuiSnackbarContent' })(SnackbarContent);

@@ -1,107 +1,81 @@
-// @flow weak
+'use strict';
 
-import React from 'react';
-import type { Node } from 'react';
-import withStyles from '../styles/withStyles';
-import createSwitch from '../internal/SwitchBase';
-import RadioButtonCheckedIcon from '../svg-icons/radio-button-checked';
-import RadioButtonUncheckedIcon from '../svg-icons/radio-button-unchecked';
-
-export const styles = (theme: Object) => ({
-  default: {
-    color: theme.palette.text.secondary,
-  },
-  checked: {
-    color: theme.palette.primary[500],
-  },
-  disabled: {
-    color: theme.palette.action.disabled,
-  },
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
+exports.RadioDocs = exports.styles = undefined;
 
-const Radio = withStyles(styles, { name: 'MuiRadio' })(
-  createSwitch({
-    inputType: 'radio',
-    defaultIcon: <RadioButtonUncheckedIcon />,
-    defaultCheckedIcon: <RadioButtonCheckedIcon />,
-  }),
-);
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _withStyles = require('../styles/withStyles');
+
+var _withStyles2 = _interopRequireDefault(_withStyles);
+
+var _SwitchBase = require('../internal/SwitchBase');
+
+var _SwitchBase2 = _interopRequireDefault(_SwitchBase);
+
+var _radioButtonChecked = require('../svg-icons/radio-button-checked');
+
+var _radioButtonChecked2 = _interopRequireDefault(_radioButtonChecked);
+
+var _radioButtonUnchecked = require('../svg-icons/radio-button-unchecked');
+
+var _radioButtonUnchecked2 = _interopRequireDefault(_radioButtonUnchecked);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var babelPluginFlowReactPropTypes_proptype_Node = require('react').babelPluginFlowReactPropTypes_proptype_Node || require('prop-types').any; //  weak
+
+var styles = exports.styles = function styles(theme) {
+  return {
+    default: {
+      color: theme.palette.text.secondary
+    },
+    checked: {
+      color: theme.palette.primary[500]
+    },
+    disabled: {
+      color: theme.palette.action.disabled
+    }
+  };
+};
+
+var Radio = (0, _withStyles2.default)(styles, { name: 'MuiRadio' })((0, _SwitchBase2.default)({
+  inputType: 'radio',
+  defaultIcon: _react2.default.createElement(_radioButtonUnchecked2.default, null),
+  defaultCheckedIcon: _react2.default.createElement(_radioButtonChecked2.default, null)
+}));
 
 Radio.displayName = 'Radio';
 
-export default Radio;
-
-export type Props = {
-  /**
-   * If `true`, the component is checked.
-   */
-  checked?: boolean | string,
-  /**
-   * The CSS class name of the root element when checked.
-   */
-  checkedClassName?: string,
-  /**
-   * The icon to display when the component is checked.
-   * If a string is provided, it will be used as a font ligature.
-   */
-  checkedIcon?: Node,
-  /**
-   * Useful to extend the style applied to components.
-   */
-  classes?: Object,
-  /**
-   * @ignore
-   */
-  className?: string,
-  /**
-   * @ignore
-   */
-  defaultChecked?: boolean,
-  /**
-   * If `true`, the switch will be disabled.
-   */
-  disabled?: boolean,
-  /**
-   * The CSS class name of the root element when disabled.
-   */
-  disabledClassName?: string,
-  /**
-   * If `true`, the ripple effect will be disabled.
-   */
-  disableRipple?: boolean,
-  /**
-   * The icon to display when the component is unchecked.
-   * If a string is provided, it will be used as a font ligature.
-   */
-  icon?: Node,
-  /**
-   * Properties applied to the `input` element.
-   */
-  inputProps?: Object,
-  /**
-   * Use that property to pass a ref callback to the native input component.
-   */
-  inputRef?: Function,
-  /*
-   * @ignore
-   */
-  name?: string,
-  /**
-   * Callback fired when the state is changed.
-   *
-   * @param {object} event The event source of the callback
-   * @param {boolean} checked The `checked` value of the switch
-   */
-  onChange?: Function,
-  /**
-   * @ignore
-   */
-  tabIndex?: string,
-  /**
-   * The value of the component.
-   */
-  value?: string,
+exports.default = Radio;
+var babelPluginFlowReactPropTypes_proptype_Props = {
+  checked: require('prop-types').oneOfType([require('prop-types').bool, require('prop-types').string]),
+  checkedClassName: require('prop-types').string,
+  checkedIcon: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node),
+  classes: require('prop-types').object,
+  className: require('prop-types').string,
+  defaultChecked: require('prop-types').bool,
+  disabled: require('prop-types').bool,
+  disabledClassName: require('prop-types').string,
+  disableRipple: require('prop-types').bool,
+  icon: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node),
+  inputProps: require('prop-types').object,
+  inputRef: require('prop-types').func,
+  name: require('prop-types').string,
+  onChange: require('prop-types').func,
+  tabIndex: require('prop-types').string,
+  value: require('prop-types').string
 };
 
+var _ref = _react2.default.createElement('span', null);
+
 // This is here solely to trigger api doc generation
-export const RadioDocs = (props: Props) => <span />; // eslint-disable-line no-unused-vars
+var RadioDocs = exports.RadioDocs = function RadioDocs(props) {
+  return _ref;
+}; // eslint-disable-line no-unused-vars
+
+RadioDocs.propTypes = process.env.NODE_ENV !== "production" ? babelPluginFlowReactPropTypes_proptype_Props : {};

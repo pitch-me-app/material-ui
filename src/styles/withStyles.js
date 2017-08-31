@@ -1,23 +1,114 @@
-// @flow weak
+'use strict';
 
-import React from 'react';
-import type { ComponentType } from 'react';
-import PropTypes from 'prop-types';
-import warning from 'warning';
-import hoistNonReactStatics from 'hoist-non-react-statics';
-import wrapDisplayName from 'recompose/wrapDisplayName';
-import createEagerFactory from 'recompose/createEagerFactory';
-import getDisplayName from 'recompose/getDisplayName';
-import contextTypes from 'react-jss/lib/contextTypes';
-import jss from 'react-jss/lib/jss';
-import * as ns from 'react-jss/lib/ns';
-import createMuiTheme from './createMuiTheme';
-import themeListener from './themeListener';
-import createGenerateClassName from './createGenerateClassName';
-import getStylesCreator from './getStylesCreator';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.sheetsManager = undefined;
+
+var _keys = require('babel-runtime/core-js/object/keys');
+
+var _keys2 = _interopRequireDefault(_keys);
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = require('babel-runtime/helpers/inherits');
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+var _map = require('babel-runtime/core-js/map');
+
+var _map2 = _interopRequireDefault(_map);
+
+var _minSafeInteger = require('babel-runtime/core-js/number/min-safe-integer');
+
+var _minSafeInteger2 = _interopRequireDefault(_minSafeInteger);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _warning = require('warning');
+
+var _warning2 = _interopRequireDefault(_warning);
+
+var _hoistNonReactStatics = require('hoist-non-react-statics');
+
+var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
+
+var _wrapDisplayName = require('recompose/wrapDisplayName');
+
+var _wrapDisplayName2 = _interopRequireDefault(_wrapDisplayName);
+
+var _createEagerFactory = require('recompose/createEagerFactory');
+
+var _createEagerFactory2 = _interopRequireDefault(_createEagerFactory);
+
+var _getDisplayName = require('recompose/getDisplayName');
+
+var _getDisplayName2 = _interopRequireDefault(_getDisplayName);
+
+var _contextTypes = require('react-jss/lib/contextTypes');
+
+var _contextTypes2 = _interopRequireDefault(_contextTypes);
+
+var _jss = require('react-jss/lib/jss');
+
+var _jss2 = _interopRequireDefault(_jss);
+
+var _ns = require('react-jss/lib/ns');
+
+var ns = _interopRequireWildcard(_ns);
+
+var _createMuiTheme = require('./createMuiTheme');
+
+var _createMuiTheme2 = _interopRequireDefault(_createMuiTheme);
+
+var _themeListener = require('./themeListener');
+
+var _themeListener2 = _interopRequireDefault(_themeListener);
+
+var _createGenerateClassName = require('./createGenerateClassName');
+
+var _createGenerateClassName2 = _interopRequireDefault(_createGenerateClassName);
+
+var _getStylesCreator = require('./getStylesCreator');
+
+var _getStylesCreator2 = _interopRequireDefault(_getStylesCreator);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var babelPluginFlowReactPropTypes_proptype_ComponentType = require('prop-types').func; //  weak
 
 // Use a singleton or the provided one by the context.
-const generateClassName = createGenerateClassName();
+var generateClassName = (0, _createGenerateClassName2.default)();
 
 // Global index counter to preserve source order.
 // As we create the style sheet during componentWillMount lifecycle,
@@ -27,286 +118,265 @@ const generateClassName = createGenerateClassName();
 // specificity, because of the source order.
 // So our solution is to render sheets them in the reverse order child->sheet, so
 // that parent has a higher specificity.
-let indexCounter = Number.MIN_SAFE_INTEGER;
+var indexCounter = _minSafeInteger2.default;
 
-export const sheetsManager = new Map();
+var sheetsManager = exports.sheetsManager = new _map2.default();
 
 // We use the same empty object to ref count the styles that don't need a theme object.
-const noopTheme = {};
+var noopTheme = {};
 
 // In order to have self-supporting components, we rely on default theme when not provided.
-let defaultTheme;
+var defaultTheme = void 0;
 
 function getDefaultTheme() {
   if (defaultTheme) {
     return defaultTheme;
   }
 
-  defaultTheme = createMuiTheme();
+  defaultTheme = (0, _createMuiTheme2.default)();
   return defaultTheme;
 }
-
-type Options = {
-  withTheme?: boolean,
-  name?: string,
-
-  // Problem: https://github.com/brigand/babel-plugin-flow-react-proptypes/issues/127
-  // import type { StyleSheetFactoryOptions } from 'jss/lib/types';
-  //  ...StyleSheetFactoryOptions,
-  // and the fact that we currently cannot import/spread types with
-  //  https://github.com/brigand/babel-plugin-flow-react-proptypes/issues/106
-  media?: string,
-  meta?: string,
-  index?: number,
-  link?: boolean,
-  element?: HTMLStyleElement,
-  generateClassName?: Function, // generateClassName - use generic to stop the bleeding.
-};
 
 // Link a style sheet with a component.
 // It does not modify the component passed to it;
 // instead, it returns a new, with a `classes` property.
-function withStyles(stylesOrCreator: Object, options?: Options = {}) {
-  function enhance<BaseProps: {}>(BaseComponent: ComponentType<BaseProps>) {
-    const { withTheme = false, name, ...styleSheetOptions } = options;
-    const factory = createEagerFactory(BaseComponent);
-    const stylesCreators = [getStylesCreator(stylesOrCreator)];
-    const listenToTheme =
-      stylesCreators.some(stylesCreator => stylesCreator.themingEnabled) ||
-      withTheme ||
-      typeof name === 'string';
+function withStyles(stylesOrCreator) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-    stylesCreators.forEach(stylesCreator => {
+  function enhance(BaseComponent) {
+    var _options$withTheme = options.withTheme,
+        withTheme = _options$withTheme === undefined ? false : _options$withTheme,
+        name = options.name,
+        styleSheetOptions = (0, _objectWithoutProperties3.default)(options, ['withTheme', 'name']);
+
+    var factory = (0, _createEagerFactory2.default)(BaseComponent);
+    var stylesCreators = [(0, _getStylesCreator2.default)(stylesOrCreator)];
+    var listenToTheme = stylesCreators.some(function (stylesCreator) {
+      return stylesCreator.themingEnabled;
+    }) || withTheme || typeof name === 'string';
+
+    stylesCreators.forEach(function (stylesCreator) {
       if (stylesCreator.options.index === undefined) {
         indexCounter += 1;
         stylesCreator.options.index = indexCounter;
       }
     });
 
-    warning(
-      indexCounter < 0,
-      [
-        'Material-UI: you might have a memory leak.',
-        'The indexCounter is not supposed to grow that much.',
-      ].join(' '),
-    );
+    process.env.NODE_ENV !== "production" ? (0, _warning2.default)(indexCounter < 0, ['Material-UI: you might have a memory leak.', 'The indexCounter is not supposed to grow that much.'].join(' ')) : void 0;
 
-    type StyleProps = {
-      /**
-       * Useful to extend the style applied to components.
-       */
-      classes?: Object,
-      /**
-       * Use that property to pass a ref callback to the decorated component.
-       */
-      innerRef?: Function,
-    };
+    var Style = function (_React$Component) {
+      (0, _inherits3.default)(Style, _React$Component);
 
-    type AllProps = StyleProps & BaseProps;
-    class Style extends React.Component<AllProps, {}> {
-      props: AllProps;
-      static contextTypes = {
-        sheetsManager: PropTypes.object,
-        ...contextTypes,
-        ...(listenToTheme ? themeListener.contextTypes : {}),
-      };
-      // Exposed for tests purposes
-      static options: ?Options;
-      // Exposed for test purposes.
-      static Naked = BaseComponent;
+      function Style(props, context) {
+        (0, _classCallCheck3.default)(this, Style);
 
-      constructor(props: AllProps, context: Object) {
-        super(props, context);
-        this.jss = this.context[ns.jss] || jss;
-        this.sheetsManager = this.context.sheetsManager || sheetsManager;
+        var _this = (0, _possibleConstructorReturn3.default)(this, (Style.__proto__ || (0, _getPrototypeOf2.default)(Style)).call(this, props, context));
+
+        _this.state = {};
+        _this.unsubscribeId = null;
+        _this.jss = null;
+        _this.sheetsManager = null;
+        _this.stylesCreators = null;
+        _this.theme = null;
+        _this.sheetOptions = null;
+        _this.theme = null;
+
+        _this.jss = _this.context[ns.jss] || _jss2.default;
+        _this.sheetsManager = _this.context.sheetsManager || sheetsManager;
         // Attach the stylesCreators to the instance of the component as in the context
         // of react-hot-loader the hooks can be executed in a different closure context:
         // https://github.com/gaearon/react-hot-loader/blob/master/src/patch.dev.js#L107
-        this.stylesCreators = stylesCreators;
-        this.sheetOptions = {
-          generateClassName,
-          ...this.context[ns.sheetOptions],
-        };
+        _this.stylesCreators = stylesCreators;
+        _this.sheetOptions = (0, _extends3.default)({
+          generateClassName: generateClassName
+        }, _this.context[ns.sheetOptions]);
         // We use || as it's lazy evaluated.
-        this.theme = listenToTheme
-          ? themeListener.initial(context) || getDefaultTheme()
-          : noopTheme;
+        _this.theme = listenToTheme ? _themeListener2.default.initial(context) || getDefaultTheme() : noopTheme;
+        return _this;
       }
+      // Exposed for test purposes.
 
-      state = {};
+      // Exposed for tests purposes
 
-      componentWillMount() {
-        this.attach(this.theme);
-      }
 
-      componentDidMount() {
-        if (!listenToTheme) {
-          return;
-        }
-
-        this.unsubscribeId = themeListener.subscribe(this.context, theme => {
-          const oldTheme = this.theme;
-          this.theme = theme;
+      (0, _createClass3.default)(Style, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
           this.attach(this.theme);
-
-          // Rerender the component so the underlying component gets the theme update.
-          this.setState({}, () => {
-            this.detach(oldTheme);
-          });
-        });
-      }
-
-      componentWillUnmount() {
-        this.detach(this.theme);
-
-        if (this.unsubscribeId !== null) {
-          themeListener.unsubscribe(this.context, this.unsubscribeId);
         }
-      }
+      }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+          var _this2 = this;
 
-      attach(theme: Object) {
-        this.stylesCreators.forEach(stylesCreator => {
-          let sheetManager = this.sheetsManager.get(stylesCreator);
-
-          if (!sheetManager) {
-            sheetManager = new Map();
-            this.sheetsManager.set(stylesCreator, sheetManager);
+          if (!listenToTheme) {
+            return;
           }
 
-          let sheetManagerTheme = sheetManager.get(theme);
+          this.unsubscribeId = _themeListener2.default.subscribe(this.context, function (theme) {
+            var oldTheme = _this2.theme;
+            _this2.theme = theme;
+            _this2.attach(_this2.theme);
 
-          if (!sheetManagerTheme) {
-            sheetManagerTheme = {
-              refs: 0,
-              sheet: null,
-            };
-            sheetManager.set(theme, sheetManagerTheme);
-          }
-
-          if (sheetManagerTheme.refs === 0) {
-            const styles = stylesCreator.create(theme, name);
-            let meta;
-
-            if (process.env.NODE_ENV !== 'production') {
-              meta = name || getDisplayName(BaseComponent);
-              // Sanitize the string as will be used in development to prefix the generated
-              // class name.
-              meta = meta.replace(new RegExp(/[!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~]/g), '-');
-            }
-
-            const sheet = this.jss.createStyleSheet(styles, {
-              meta,
-              link: false,
-              ...this.sheetOptions,
-              ...stylesCreator.options,
-              name,
-              ...styleSheetOptions,
+            // Rerender the component so the underlying component gets the theme update.
+            _this2.setState({}, function () {
+              _this2.detach(oldTheme);
             });
+          });
+        }
+      }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+          this.detach(this.theme);
 
-            sheetManagerTheme.sheet = sheet;
-            sheet.attach();
-
-            const sheetsRegistry = this.context[ns.sheetsRegistry];
-            if (sheetsRegistry) {
-              sheetsRegistry.add(sheet);
-            }
+          if (this.unsubscribeId !== null) {
+            _themeListener2.default.unsubscribe(this.context, this.unsubscribeId);
           }
+        }
+      }, {
+        key: 'attach',
+        value: function attach(theme) {
+          var _this3 = this;
 
-          sheetManagerTheme.refs += 1;
-        });
-      }
+          this.stylesCreators.forEach(function (stylesCreator) {
+            var sheetManager = _this3.sheetsManager.get(stylesCreator);
 
-      detach(theme: Object) {
-        this.stylesCreators.forEach(stylesCreator => {
-          const sheetManager = this.sheetsManager.get(stylesCreator);
-          const sheetManagerTheme = sheetManager.get(theme);
-
-          sheetManagerTheme.refs -= 1;
-
-          if (sheetManagerTheme.refs === 0) {
-            sheetManager.delete(theme);
-            sheetManagerTheme.sheet.detach();
-            const sheetsRegistry = this.context[ns.sheetsRegistry];
-            if (sheetsRegistry) {
-              sheetsRegistry.remove(sheetManagerTheme.sheet);
+            if (!sheetManager) {
+              sheetManager = new _map2.default();
+              _this3.sheetsManager.set(stylesCreator, sheetManager);
             }
-          }
-        });
-      }
 
-      unsubscribeId = null;
-      jss = null;
-      sheetsManager = null;
-      stylesCreators = null;
-      theme = null;
-      sheetOptions = null;
-      theme = null;
+            var sheetManagerTheme = sheetManager.get(theme);
 
-      render() {
-        const { classes: classesProp, innerRef, ...other } = this.props;
+            if (!sheetManagerTheme) {
+              sheetManagerTheme = {
+                refs: 0,
+                sheet: null
+              };
+              sheetManager.set(theme, sheetManagerTheme);
+            }
 
-        let classes;
-        const renderedClasses = this.stylesCreators.reduce((accumulator, current) => {
-          const sheetManager = this.sheetsManager.get(current);
-          const sheetsManagerTheme = sheetManager.get(this.theme);
+            if (sheetManagerTheme.refs === 0) {
+              var styles = stylesCreator.create(theme, name);
+              var _meta = void 0;
 
-          return {
-            ...accumulator,
-            ...sheetsManagerTheme.sheet.classes,
-          };
-        }, {});
+              if (process.env.NODE_ENV !== 'production') {
+                _meta = name || (0, _getDisplayName2.default)(BaseComponent);
+                // Sanitize the string as will be used in development to prefix the generated
+                // class name.
+                _meta = _meta.replace(new RegExp(/[!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~]/g), '-');
+              }
 
-        if (classesProp) {
-          classes = {
-            ...renderedClasses,
-            ...Object.keys(classesProp).reduce((accumulator, key) => {
-              warning(
-                renderedClasses[key],
-                [
-                  `Material-UI: the key \`${key}\` ` +
-                    `provided to the classes property object is not implemented in ${getDisplayName(
-                      BaseComponent,
-                    )}.`,
-                  `You can only overrides one of the following: ${Object.keys(renderedClasses).join(
-                    ',',
-                  )}`,
-                ].join('\n'),
-              );
+              var sheet = _this3.jss.createStyleSheet(styles, (0, _extends3.default)({
+                meta: _meta,
+                link: false
+              }, _this3.sheetOptions, stylesCreator.options, {
+                name: name
+              }, styleSheetOptions));
+
+              sheetManagerTheme.sheet = sheet;
+              sheet.attach();
+
+              var sheetsRegistry = _this3.context[ns.sheetsRegistry];
+              if (sheetsRegistry) {
+                sheetsRegistry.add(sheet);
+              }
+            }
+
+            sheetManagerTheme.refs += 1;
+          });
+        }
+      }, {
+        key: 'detach',
+        value: function detach(theme) {
+          var _this4 = this;
+
+          this.stylesCreators.forEach(function (stylesCreator) {
+            var sheetManager = _this4.sheetsManager.get(stylesCreator);
+            var sheetManagerTheme = sheetManager.get(theme);
+
+            sheetManagerTheme.refs -= 1;
+
+            if (sheetManagerTheme.refs === 0) {
+              sheetManager.delete(theme);
+              sheetManagerTheme.sheet.detach();
+              var sheetsRegistry = _this4.context[ns.sheetsRegistry];
+              if (sheetsRegistry) {
+                sheetsRegistry.remove(sheetManagerTheme.sheet);
+              }
+            }
+          });
+        }
+      }, {
+        key: 'render',
+        value: function render() {
+          var _this5 = this;
+
+          var _props = this.props,
+              classesProp = _props.classes,
+              innerRef = _props.innerRef,
+              other = (0, _objectWithoutProperties3.default)(_props, ['classes', 'innerRef']);
+
+
+          var classes = void 0;
+          var renderedClasses = this.stylesCreators.reduce(function (accumulator, current) {
+            var sheetManager = _this5.sheetsManager.get(current);
+            var sheetsManagerTheme = sheetManager.get(_this5.theme);
+
+            return (0, _extends3.default)({}, accumulator, sheetsManagerTheme.sheet.classes);
+          }, {});
+
+          if (classesProp) {
+            classes = (0, _extends3.default)({}, renderedClasses, (0, _keys2.default)(classesProp).reduce(function (accumulator, key) {
+              process.env.NODE_ENV !== "production" ? (0, _warning2.default)(renderedClasses[key], ['Material-UI: the key `' + key + '` ' + ('provided to the classes property object is not implemented in ' + (0, _getDisplayName2.default)(BaseComponent) + '.'), 'You can only overrides one of the following: ' + (0, _keys2.default)(renderedClasses).join(',')].join('\n')) : void 0;
 
               if (classesProp[key] !== undefined) {
-                accumulator[key] = `${renderedClasses[key]} ${classesProp[key]}`;
+                accumulator[key] = renderedClasses[key] + ' ' + classesProp[key];
               }
               return accumulator;
-            }, {}),
-          };
-        } else {
-          classes = renderedClasses;
+            }, {}));
+          } else {
+            classes = renderedClasses;
+          }
+
+          var more = {};
+
+          // Provide the theme to the wrapped component.
+          // So we don't have to use the `withTheme()` Higher-order component.
+          if (withTheme) {
+            more.theme = this.theme;
+          }
+
+          return factory((0, _extends3.default)({
+            classes: classes,
+            ref: innerRef
+          }, more, other));
         }
+      }]);
+      return Style;
+    }(_react2.default.Component);
 
-        const more = {};
+    Style.contextTypes = (0, _extends3.default)({
+      sheetsManager: _propTypes2.default.object
+    }, _contextTypes2.default, listenToTheme ? _themeListener2.default.contextTypes : {});
+    Style.Naked = BaseComponent;
+    Style.propTypes = process.env.NODE_ENV !== "production" ? {
+      classes: require('prop-types').object,
+      innerRef: require('prop-types').func
+    } : {};
+    Style.propTypes = process.env.NODE_ENV !== "production" ? {
+      classes: require('prop-types').object,
+      innerRef: require('prop-types').func
+    } : {};
 
-        // Provide the theme to the wrapped component.
-        // So we don't have to use the `withTheme()` Higher-order component.
-        if (withTheme) {
-          more.theme = this.theme;
-        }
 
-        return factory({
-          classes,
-          ref: innerRef,
-          ...more,
-          ...other,
-        });
-      }
-    }
-
-    hoistNonReactStatics(Style, BaseComponent);
+    (0, _hoistNonReactStatics2.default)(Style, BaseComponent);
 
     // Higher specificity
     Style.options = options;
 
     if (process.env.NODE_ENV !== 'production') {
-      Style.displayName = wrapDisplayName(BaseComponent, 'withStyles');
+      Style.displayName = (0, _wrapDisplayName2.default)(BaseComponent, 'withStyles');
     }
 
     return Style;
@@ -315,4 +385,4 @@ function withStyles(stylesOrCreator: Object, options?: Options = {}) {
   return enhance;
 }
 
-export default withStyles;
+exports.default = withStyles;

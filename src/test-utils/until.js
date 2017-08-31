@@ -1,21 +1,34 @@
-// @flow weak
+'use strict';
 
-function shallowRecursively(wrapper, selector, { context }) {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+exports.default = until;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//  weak
+
+function shallowRecursively(wrapper, selector, _ref) {
+  var context = _ref.context;
+
   if (wrapper.isEmptyRender() || typeof wrapper.node.type === 'string') {
     return wrapper;
   }
 
-  let newContext = context;
+  var newContext = context;
 
-  const instance = wrapper.root.instance();
+  var instance = wrapper.root.instance();
   if (instance.getChildContext) {
-    newContext = {
-      ...context,
-      ...instance.getChildContext(),
-    };
+    newContext = (0, _extends3.default)({}, context, instance.getChildContext());
   }
 
-  const nextWrapper = wrapper.shallow({ context: newContext });
+  var nextWrapper = wrapper.shallow({ context: newContext });
 
   if (selector && wrapper.is(selector)) {
     return nextWrapper;
@@ -24,6 +37,13 @@ function shallowRecursively(wrapper, selector, { context }) {
   return shallowRecursively(nextWrapper, selector, { context: newContext });
 }
 
-export default function until(selector, { context } = this.options) {
-  return this.single('until', () => shallowRecursively(this, selector, { context }));
+function until(selector) {
+  var _this = this;
+
+  var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.options,
+      context = _ref2.context;
+
+  return this.single('until', function () {
+    return shallowRecursively(_this, selector, { context: context });
+  });
 }

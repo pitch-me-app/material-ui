@@ -1,7 +1,10 @@
-// @flow
+'use strict';
 
-function createRippleHandler(instance: Object, eventName: string, action: string, cb: ?Function) {
-  return function handleEvent(event: SyntheticUIEvent<>) {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+function createRippleHandler(instance, eventName, action, cb) {
+  return function handleEvent(event) {
     if (cb) {
       cb.call(instance, event);
     }
@@ -14,12 +17,12 @@ function createRippleHandler(instance: Object, eventName: string, action: string
       instance.ripple[action](event);
     }
 
-    if (instance.props && typeof instance.props[`on${eventName}`] === 'function') {
-      instance.props[`on${eventName}`](event);
+    if (instance.props && typeof instance.props['on' + eventName] === 'function') {
+      instance.props['on' + eventName](event);
     }
 
     return true;
   };
 }
 
-export default createRippleHandler;
+exports.default = createRippleHandler;

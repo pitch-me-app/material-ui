@@ -1,59 +1,21 @@
-// @flow
+'use strict';
 
-import type { Element } from 'react';
-import type { Breakpoint } from '../styles/createBreakpoints';
+var babelPluginFlowReactPropTypes_proptype_Element = require('react').babelPluginFlowReactPropTypes_proptype_Element || require('prop-types').any;
 
-export type HiddenProps = {
-  /**
-   * The content of the component.
-   */
-  children?: Element<*>,
-  /**
-   * @ignore
-   */
-  className?: string,
-  /**
-   * Hide the given breakpoint(s).
-   */
-  only?: Breakpoint | Array<Breakpoint>,
-  /**
-   * If true, screens this size and up will be hidden.
-   */
-  xsUp?: boolean,
-  /**
-   * If true, screens this size and up will be hidden.
-   */
-  smUp?: boolean,
-  /**
-   * If true, screens this size and up will be hidden.
-   */
-  mdUp?: boolean,
-  /**
-   * If true, screens this size and up will be hidden.
-   */
-  lgUp?: boolean,
-  /**
-   * If true, screens this size and up will be hidden.
-   */
-  xlUp?: boolean,
-  /**
-   * If true, screens this size and down will be hidden.
-   */
-  xsDown?: boolean,
-  /**
-   * If true, screens this size and down will be hidden.
-   */
-  smDown?: boolean,
-  /**
-   * If true, screens this size and down will be hidden.
-   */
-  mdDown?: boolean,
-  /**
-   * If true, screens this size and down will be hidden.
-   */
-  lgDown?: boolean,
-  /**
-   * If true, screens this size and down will be hidden.
-   */
-  xlDown?: boolean,
+var babelPluginFlowReactPropTypes_proptype_Breakpoint = require('../styles/createBreakpoints').babelPluginFlowReactPropTypes_proptype_Breakpoint || require('prop-types').any;
+
+var babelPluginFlowReactPropTypes_proptype_HiddenProps = {
+  children: typeof babelPluginFlowReactPropTypes_proptype_Element === 'function' ? babelPluginFlowReactPropTypes_proptype_Element : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Element),
+  className: require('prop-types').string,
+  only: require('prop-types').oneOfType([typeof babelPluginFlowReactPropTypes_proptype_Breakpoint === 'function' ? babelPluginFlowReactPropTypes_proptype_Breakpoint : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Breakpoint), require('prop-types').arrayOf(typeof babelPluginFlowReactPropTypes_proptype_Breakpoint === 'function' ? babelPluginFlowReactPropTypes_proptype_Breakpoint : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Breakpoint))]),
+  xsUp: require('prop-types').bool,
+  smUp: require('prop-types').bool,
+  mdUp: require('prop-types').bool,
+  lgUp: require('prop-types').bool,
+  xlUp: require('prop-types').bool,
+  xsDown: require('prop-types').bool,
+  smDown: require('prop-types').bool,
+  mdDown: require('prop-types').bool,
+  lgDown: require('prop-types').bool,
+  xlDown: require('prop-types').bool
 };

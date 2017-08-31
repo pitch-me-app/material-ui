@@ -1,73 +1,99 @@
-// @flow weak
+'use strict';
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import withStyles from '../styles/withStyles';
-import { capitalizeFirstLetter } from '../utils/helpers';
-
-export const styles = (theme: Object) => ({
-  root: {
-    position: 'relative',
-    height: 2,
-    marginTop: -2,
-    transition: theme.transitions.create(),
-    willChange: 'left, width',
-  },
-  colorAccent: {
-    backgroundColor: theme.palette.secondary.A200,
-  },
-  colorPrimary: {
-    backgroundColor: theme.palette.primary[500],
-  },
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
+exports.styles = undefined;
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _withStyles = require('../styles/withStyles');
+
+var _withStyles2 = _interopRequireDefault(_withStyles);
+
+var _helpers = require('../utils/helpers');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var styles = exports.styles = function styles(theme) {
+  return {
+    root: {
+      position: 'relative',
+      height: 2,
+      marginTop: -2,
+      transition: theme.transitions.create(),
+      willChange: 'left, width'
+    },
+    colorAccent: {
+      backgroundColor: theme.palette.secondary.A200
+    },
+    colorPrimary: {
+      backgroundColor: theme.palette.primary[500]
+    }
+  };
+};
 
 /**
  * @ignore - internal component.
  */
+//  weak
+
 function TabIndicator(props) {
-  const { classes, className: classNameProp, color, style: styleProp } = props;
-  const colorPredefined = ['primary', 'accent'].indexOf(color) !== -1;
-  const className = classNames(
-    classes.root,
-    {
-      [classes[`color${capitalizeFirstLetter(color)}`]]: colorPredefined,
-    },
-    classNameProp,
-  );
+  var classes = props.classes,
+      classNameProp = props.className,
+      color = props.color,
+      styleProp = props.style;
 
-  const style = colorPredefined
-    ? styleProp
-    : {
-        ...styleProp,
-        backgroundColor: color,
-      };
+  var colorPredefined = ['primary', 'accent'].indexOf(color) !== -1;
+  var className = (0, _classnames2.default)(classes.root, (0, _defineProperty3.default)({}, classes['color' + (0, _helpers.capitalizeFirstLetter)(color)], colorPredefined), classNameProp);
 
-  return <div className={className} style={style} />;
+  var style = colorPredefined ? styleProp : (0, _extends3.default)({}, styleProp, {
+    backgroundColor: color
+  });
+
+  return _react2.default.createElement('div', { className: className, style: style });
 }
 
-TabIndicator.propTypes = {
+TabIndicator.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * Useful to extend the style applied to components.
    */
-  classes: PropTypes.object.isRequired,
+  classes: _propTypes2.default.object.isRequired,
   /**
    * @ignore
    */
-  className: PropTypes.string,
+  className: _propTypes2.default.string,
   /**
    * @ignore
    * The color of the tab indicator.
    */
-  color: PropTypes.oneOfType([PropTypes.oneOf(['accent', 'primary']), PropTypes.string]).isRequired,
+  color: _propTypes2.default.oneOfType([_propTypes2.default.oneOf(['accent', 'primary']), _propTypes2.default.string]).isRequired,
   /**
    * @ignore
    * The style of the root element.
    */
-  style: PropTypes.shape({
-    left: PropTypes.number,
-    width: PropTypes.number,
-  }).isRequired,
-};
+  style: _propTypes2.default.shape({
+    left: _propTypes2.default.number,
+    width: _propTypes2.default.number
+  }).isRequired
+} : {};
 
-export default withStyles(styles, { name: 'MuiTabIndicator' })(TabIndicator);
+exports.default = (0, _withStyles2.default)(styles, { name: 'MuiTabIndicator' })(TabIndicator);

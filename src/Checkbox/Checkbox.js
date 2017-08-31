@@ -1,121 +1,94 @@
-// @flow
+'use strict';
 
-import React from 'react';
-import type { Node } from 'react';
-import withStyles from '../styles/withStyles';
-import createSwitch from '../internal/SwitchBase';
-import IndeterminateCheckBoxIcon from '../svg-icons/indeterminate-check-box';
-
-export const styles = (theme: Object) => ({
-  default: {
-    color: theme.palette.text.secondary,
-  },
-  checked: {
-    color: theme.palette.primary[500],
-  },
-  disabled: {
-    color: theme.palette.action.disabled,
-  },
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
+exports.styles = undefined;
 
-const SwitchBase = createSwitch();
+var _extends2 = require('babel-runtime/helpers/extends');
 
-export type Props = {
-  /**
-   * If `true`, the component is checked.
-   */
-  checked?: boolean | string,
-  /**
-   * The CSS class name of the root element when checked.
-   */
-  checkedClassName?: string,
-  /**
-   * The icon to display when the component is checked.
-   * If a string is provided, it will be used as a font ligature.
-   */
-  checkedIcon?: Node,
-  /**
-   * Useful to extend the style applied to components.
-   */
-  classes?: Object,
-  /**
-   * @ignore
-   */
-  className?: string,
-  /**
-   * @ignore
-   */
-  defaultChecked?: boolean,
-  /**
-   * If `true`, the switch will be disabled.
-   */
-  disabled?: boolean,
-  /**
-   * The CSS class name of the root element when disabled.
-   */
-  disabledClassName?: string,
-  /**
-   * If `true`, the ripple effect will be disabled.
-   */
-  disableRipple?: boolean,
-  /**
-   * The icon to display when the component is unchecked.
-   * If a string is provided, it will be used as a font ligature.
-   */
-  icon?: Node,
-  /**
-   * If `true`, the component appears indeterminate.
-   */
-  indeterminate?: boolean,
-  /**
-   * The icon to display when the component is indeterminate.
-   * If a string is provided, it will be used as a font ligature.
-   */
-  indeterminateIcon?: Node,
-  /**
-   * Properties applied to the `input` element.
-   */
-  inputProps?: Object,
-  /**
-   * Use that property to pass a ref callback to the native input component.
-   */
-  inputRef?: Function,
-  /*
-   * @ignore
-   */
-  name?: string,
-  /**
-   * Callback fired when the state is changed.
-   *
-   * @param {object} event The event source of the callback
-   * @param {boolean} checked The `checked` value of the switch
-   */
-  onChange?: Function,
-  /**
-   * @ignore
-   */
-  tabIndex?: string,
-  /**
-   * The value of the component.
-   */
-  value?: string,
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _withStyles = require('../styles/withStyles');
+
+var _withStyles2 = _interopRequireDefault(_withStyles);
+
+var _SwitchBase = require('../internal/SwitchBase');
+
+var _SwitchBase2 = _interopRequireDefault(_SwitchBase);
+
+var _indeterminateCheckBox = require('../svg-icons/indeterminate-check-box');
+
+var _indeterminateCheckBox2 = _interopRequireDefault(_indeterminateCheckBox);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var babelPluginFlowReactPropTypes_proptype_Node = require('react').babelPluginFlowReactPropTypes_proptype_Node || require('prop-types').any;
+
+var styles = exports.styles = function styles(theme) {
+  return {
+    default: {
+      color: theme.palette.text.secondary
+    },
+    checked: {
+      color: theme.palette.primary[500]
+    },
+    disabled: {
+      color: theme.palette.action.disabled
+    }
+  };
 };
 
-function Checkbox(props: Props) {
-  const { checkedIcon, icon, indeterminate, indeterminateIcon, ...other } = props;
+var SwitchBase = (0, _SwitchBase2.default)();
 
-  return (
-    <SwitchBase
-      checkedIcon={indeterminate ? indeterminateIcon : checkedIcon}
-      icon={indeterminate ? indeterminateIcon : icon}
-      {...other}
-    />
-  );
+var babelPluginFlowReactPropTypes_proptype_Props = {
+  checked: require('prop-types').oneOfType([require('prop-types').bool, require('prop-types').string]),
+  checkedClassName: require('prop-types').string,
+  checkedIcon: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node),
+  classes: require('prop-types').object,
+  className: require('prop-types').string,
+  defaultChecked: require('prop-types').bool,
+  disabled: require('prop-types').bool,
+  disabledClassName: require('prop-types').string,
+  disableRipple: require('prop-types').bool,
+  icon: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node),
+  indeterminate: require('prop-types').bool,
+  indeterminateIcon: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node),
+  inputProps: require('prop-types').object,
+  inputRef: require('prop-types').func,
+  name: require('prop-types').string,
+  onChange: require('prop-types').func,
+  tabIndex: require('prop-types').string,
+  value: require('prop-types').string
+};
+
+
+function Checkbox(props) {
+  var checkedIcon = props.checkedIcon,
+      icon = props.icon,
+      indeterminate = props.indeterminate,
+      indeterminateIcon = props.indeterminateIcon,
+      other = (0, _objectWithoutProperties3.default)(props, ['checkedIcon', 'icon', 'indeterminate', 'indeterminateIcon']);
+
+
+  return _react2.default.createElement(SwitchBase, (0, _extends3.default)({
+    checkedIcon: indeterminate ? indeterminateIcon : checkedIcon,
+    icon: indeterminate ? indeterminateIcon : icon
+  }, other));
 }
 
+Checkbox.propTypes = process.env.NODE_ENV !== "production" ? babelPluginFlowReactPropTypes_proptype_Props : {};
 Checkbox.defaultProps = {
   indeterminate: false,
-  indeterminateIcon: <IndeterminateCheckBoxIcon />,
+  indeterminateIcon: _react2.default.createElement(_indeterminateCheckBox2.default, null)
 };
 
-export default withStyles(styles, { name: 'MuiCheckbox' })(Checkbox);
+exports.default = (0, _withStyles2.default)(styles, { name: 'MuiCheckbox' })(Checkbox);

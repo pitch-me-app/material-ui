@@ -1,12 +1,34 @@
-// @flow
-// Taken from https://github.com/react-bootstrap/react-overlays/blob/master/src/ModalManager.js
+'use strict';
 
-import warning from 'warning';
-import isWindow from 'dom-helpers/query/isWindow';
-import ownerDocument from 'dom-helpers/ownerDocument';
-import canUseDom from 'dom-helpers/util/inDOM';
-import getScrollbarSize from 'dom-helpers/util/scrollbarSize';
-import { hideSiblings, showSiblings, ariaHidden } from '../utils/manageAriaHidden';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _warning = require('warning');
+
+var _warning2 = _interopRequireDefault(_warning);
+
+var _isWindow = require('dom-helpers/query/isWindow');
+
+var _isWindow2 = _interopRequireDefault(_isWindow);
+
+var _ownerDocument = require('dom-helpers/ownerDocument');
+
+var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
+
+var _inDOM = require('dom-helpers/util/inDOM');
+
+var _inDOM2 = _interopRequireDefault(_inDOM);
+
+var _scrollbarSize = require('dom-helpers/util/scrollbarSize');
+
+var _scrollbarSize2 = _interopRequireDefault(_scrollbarSize);
+
+var _manageAriaHidden = require('../utils/manageAriaHidden');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Taken from https://github.com/react-bootstrap/react-overlays/blob/master/src/ModalManager.js
 
 function getPaddingRight(node) {
   return parseInt(node.style.paddingRight || 0, 10);
@@ -14,19 +36,19 @@ function getPaddingRight(node) {
 
 // Do we have a scroll bar?
 function bodyIsOverflowing(node) {
-  const doc = ownerDocument(node);
-  const win = isWindow(doc);
+  var doc = (0, _ownerDocument2.default)(node);
+  var win = (0, _isWindow2.default)(doc);
 
   // Takes in account potential non zero margin on the body.
-  const style = window.getComputedStyle(doc.body);
-  const marginLeft = parseInt(style.getPropertyValue('margin-left'), 10);
-  const marginRight = parseInt(style.getPropertyValue('margin-right'), 10);
+  var style = window.getComputedStyle(doc.body);
+  var marginLeft = parseInt(style.getPropertyValue('margin-left'), 10);
+  var marginRight = parseInt(style.getPropertyValue('margin-right'), 10);
 
   return marginLeft + doc.body.clientWidth + marginRight < win.innerWidth;
 }
 
 // The container shouldn't be used on the server.
-const defaultContainer = canUseDom ? window.document.body : {};
+var defaultContainer = _inDOM2.default ? window.document.body : {};
 
 /**
  * State management helper for modals/layers.
@@ -34,25 +56,22 @@ const defaultContainer = canUseDom ? window.document.body : {};
  *
  * @internal Used by the Modal to ensure proper focus management.
  */
-function createModalManager(
-  { container = defaultContainer, hideSiblingNodes = true }: Object = {},
-) {
-  warning(
-    container !== null,
-    `
-    Material-UI: you are most likely evaluating the code before the
-    browser has a chance to reach the <body>.
-    Please move the import at the end of the <body>.
-  `,
-  );
+function createModalManager() {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      _ref$container = _ref.container,
+      container = _ref$container === undefined ? defaultContainer : _ref$container,
+      _ref$hideSiblingNodes = _ref.hideSiblingNodes,
+      hideSiblingNodes = _ref$hideSiblingNodes === undefined ? true : _ref$hideSiblingNodes;
 
-  const modals = [];
+  process.env.NODE_ENV !== "production" ? (0, _warning2.default)(container !== null, '\n    Material-UI: you are most likely evaluating the code before the\n    browser has a chance to reach the <body>.\n    Please move the import at the end of the <body>.\n  ') : void 0;
 
-  let prevOverflow;
-  let prevPaddings = [];
+  var modals = [];
 
-  function add(modal: Object) {
-    let modalIdx = modals.indexOf(modal);
+  var prevOverflow = void 0;
+  var prevPaddings = [];
+
+  function add(modal) {
+    var modalIdx = modals.indexOf(modal);
 
     if (modalIdx !== -1) {
       return modalIdx;
@@ -62,7 +81,7 @@ function createModalManager(
     modals.push(modal);
 
     if (hideSiblingNodes) {
-      hideSiblings(container, modal.mountNode);
+      (0, _manageAriaHidden.hideSiblings)(container, modal.mountNode);
     }
 
     if (modals.length === 1) {
@@ -72,14 +91,14 @@ function createModalManager(
 
       if (bodyIsOverflowing(container)) {
         prevPaddings = [getPaddingRight(container)];
-        const scrollbarSize = getScrollbarSize();
-        container.style.paddingRight = `${prevPaddings[0] + scrollbarSize}px`;
+        var scrollbarSize = (0, _scrollbarSize2.default)();
+        container.style.paddingRight = prevPaddings[0] + scrollbarSize + 'px';
 
-        const fixedNodes = document.querySelectorAll('.mui-fixed');
-        for (let i = 0; i < fixedNodes.length; i += 1) {
-          const paddingRight = getPaddingRight(fixedNodes[i]);
+        var fixedNodes = document.querySelectorAll('.mui-fixed');
+        for (var i = 0; i < fixedNodes.length; i += 1) {
+          var paddingRight = getPaddingRight(fixedNodes[i]);
           prevPaddings.push(paddingRight);
-          fixedNodes[i].style.paddingRight = `${paddingRight + scrollbarSize}px`;
+          fixedNodes[i].style.paddingRight = paddingRight + scrollbarSize + 'px';
         }
       }
 
@@ -89,8 +108,8 @@ function createModalManager(
     return modalIdx;
   }
 
-  function remove(modal: Object) {
-    const modalIdx = modals.indexOf(modal);
+  function remove(modal) {
+    var modalIdx = modals.indexOf(modal);
 
     if (modalIdx === -1) {
       return modalIdx;
@@ -102,31 +121,31 @@ function createModalManager(
       container.style.overflow = prevOverflow;
       container.style.paddingRight = prevPaddings[0];
 
-      const fixedNodes = document.querySelectorAll('.mui-fixed');
-      for (let i = 0; i < fixedNodes.length; i += 1) {
-        fixedNodes[i].style.paddingRight = `${prevPaddings[i + 1]}px`;
+      var fixedNodes = document.querySelectorAll('.mui-fixed');
+      for (var i = 0; i < fixedNodes.length; i += 1) {
+        fixedNodes[i].style.paddingRight = prevPaddings[i + 1] + 'px';
       }
 
       prevOverflow = undefined;
       prevPaddings = [];
       if (hideSiblingNodes) {
-        showSiblings(container, modal.mountNode);
+        (0, _manageAriaHidden.showSiblings)(container, modal.mountNode);
       }
     } else if (hideSiblingNodes) {
       // otherwise make sure the next top modal is visible to a SR
-      ariaHidden(false, modals[modals.length - 1].mountNode);
+      (0, _manageAriaHidden.ariaHidden)(false, modals[modals.length - 1].mountNode);
     }
 
     return modalIdx;
   }
 
-  function isTopModal(modal: Object) {
+  function isTopModal(modal) {
     return !!modals.length && modals[modals.length - 1] === modal;
   }
 
-  const modalManager = { add, remove, isTopModal };
+  var modalManager = { add: add, remove: remove, isTopModal: isTopModal };
 
   return modalManager;
 }
 
-export default createModalManager;
+exports.default = createModalManager;

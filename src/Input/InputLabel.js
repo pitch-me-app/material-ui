@@ -1,144 +1,138 @@
-// @flow
+'use strict';
 
-import React from 'react';
-import type { Node } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import withStyles from '../styles/withStyles';
-import { FormLabel } from '../Form';
-
-export const styles = (theme: Object) => ({
-  root: {
-    transformOrigin: 'top left',
-  },
-  formControl: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    // slight alteration to spec spacing to match visual spec result
-    transform: `translate(0, ${theme.spacing.unit * 3 - 1}px) scale(1)`,
-  },
-  // Compensation for the `Input.inputDense` style.
-  labelDense: {
-    transform: `translate(0, ${theme.spacing.unit * 2.5 + 1}px) scale(1)`,
-  },
-  shrink: {
-    transform: 'translate(0, 1.5px) scale(0.75)',
-    transformOrigin: 'top left',
-  },
-  animated: {
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shorter,
-      easing: theme.transitions.easing.easeOut,
-    }),
-  },
-  disabled: {
-    color: theme.palette.input.disabled,
-  },
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
+exports.styles = undefined;
 
-type DefaultProps = {
-  classes: Object,
-  disabled: boolean,
-  disableAnimation: boolean,
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+var _ref;
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _withStyles = require('../styles/withStyles');
+
+var _withStyles2 = _interopRequireDefault(_withStyles);
+
+var _Form = require('../Form');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var babelPluginFlowReactPropTypes_proptype_Node = require('react').babelPluginFlowReactPropTypes_proptype_Node || require('prop-types').any;
+
+var styles = exports.styles = function styles(theme) {
+  return {
+    root: {
+      transformOrigin: 'top left'
+    },
+    formControl: {
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      // slight alteration to spec spacing to match visual spec result
+      transform: 'translate(0, ' + (theme.spacing.unit * 3 - 1) + 'px) scale(1)'
+    },
+    // Compensation for the `Input.inputDense` style.
+    labelDense: {
+      transform: 'translate(0, ' + (theme.spacing.unit * 2.5 + 1) + 'px) scale(1)'
+    },
+    shrink: {
+      transform: 'translate(0, 1.5px) scale(0.75)',
+      transformOrigin: 'top left'
+    },
+    animated: {
+      transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shorter,
+        easing: theme.transitions.easing.easeOut
+      })
+    },
+    disabled: {
+      color: theme.palette.input.disabled
+    }
+  };
 };
 
-export type Props = {
-  /**
-   * The contents of the `InputLabel`.
-   */
-  children?: Node,
-  /**
-   * Useful to extend the style applied to components.
-   */
-  classes?: Object,
-  /**
-   * @ignore
-   */
-  className?: string,
-  /**
-   * If `true`, the transition animation is disabled.
-   */
-  disableAnimation?: boolean,
-  /**
-   * If `true`, apply disabled class.
-   */
-  disabled?: boolean,
-  /**
-   * If `true`, the label will be displayed in an error state.
-   */
-  error?: boolean,
-  /**
-   * If `true`, the input of this label is focused.
-   */
-  focused?: boolean,
-  /**
-   * If `dense`, will adjust vertical spacing. This is normally obtained via context from
-   * FormControl.
-   */
-  margin?: 'dense',
-  /**
-   * if `true`, the label will indicate that the input is required.
-   */
-  required?: boolean,
-  /**
-   * If `true`, the label is shrunk.
-   */
-  shrink?: boolean,
+var babelPluginFlowReactPropTypes_proptype_Props = {
+  children: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node),
+  classes: require('prop-types').object,
+  className: require('prop-types').string,
+  disableAnimation: require('prop-types').bool,
+  disabled: require('prop-types').bool,
+  error: require('prop-types').bool,
+  focused: require('prop-types').bool,
+  margin: require('prop-types').oneOf(['dense']),
+  required: require('prop-types').bool,
+  shrink: require('prop-types').bool
 };
 
-type AllProps = DefaultProps & Props;
 
-function InputLabel(props: AllProps, context: { muiFormControl: Object }) {
-  const {
-    disabled,
-    disableAnimation,
-    children,
-    classes,
-    className: classNameProp,
-    shrink: shrinkProp,
-    margin: marginProp,
-    ...other
-  } = props;
+function InputLabel(props, context) {
+  var _classNames;
 
-  const { muiFormControl } = context;
-  let shrink = shrinkProp;
+  var disabled = props.disabled,
+      disableAnimation = props.disableAnimation,
+      children = props.children,
+      classes = props.classes,
+      classNameProp = props.className,
+      shrinkProp = props.shrink,
+      marginProp = props.margin,
+      other = (0, _objectWithoutProperties3.default)(props, ['disabled', 'disableAnimation', 'children', 'classes', 'className', 'shrink', 'margin']);
+  var muiFormControl = context.muiFormControl;
+
+  var shrink = shrinkProp;
 
   if (typeof shrink === 'undefined' && muiFormControl) {
     shrink = muiFormControl.dirty || muiFormControl.focused;
   }
 
-  let margin = marginProp;
+  var margin = marginProp;
   if (typeof margin === 'undefined' && muiFormControl) {
     margin = muiFormControl.margin;
   }
 
-  const className = classNames(
-    classes.root,
-    {
-      [classes.formControl]: muiFormControl,
-      [classes.animated]: !disableAnimation,
-      [classes.shrink]: shrink,
-      [classes.disabled]: disabled,
-      [classes.labelDense]: margin === 'dense',
-    },
-    classNameProp,
-  );
+  var className = (0, _classnames2.default)(classes.root, (_classNames = {}, (0, _defineProperty3.default)(_classNames, classes.formControl, muiFormControl), (0, _defineProperty3.default)(_classNames, classes.animated, !disableAnimation), (0, _defineProperty3.default)(_classNames, classes.shrink, shrink), (0, _defineProperty3.default)(_classNames, classes.disabled, disabled), (0, _defineProperty3.default)(_classNames, classes.labelDense, margin === 'dense'), _classNames), classNameProp);
 
-  return (
-    <FormLabel className={className} {...other}>
-      {children}
-    </FormLabel>
+  return _react2.default.createElement(
+    _Form.FormLabel,
+    (0, _extends3.default)({ className: className }, other),
+    children
   );
 }
 
+InputLabel.propTypes = process.env.NODE_ENV !== "production" ? (_ref = {
+  classes: require('prop-types').object.isRequired,
+  disabled: require('prop-types').bool.isRequired,
+  disableAnimation: require('prop-types').bool.isRequired,
+  children: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node)
+}, (0, _defineProperty3.default)(_ref, 'classes', require('prop-types').object), (0, _defineProperty3.default)(_ref, 'className', require('prop-types').string), (0, _defineProperty3.default)(_ref, 'disableAnimation', require('prop-types').bool), (0, _defineProperty3.default)(_ref, 'disabled', require('prop-types').bool), (0, _defineProperty3.default)(_ref, 'error', require('prop-types').bool), (0, _defineProperty3.default)(_ref, 'focused', require('prop-types').bool), (0, _defineProperty3.default)(_ref, 'margin', require('prop-types').oneOf(['dense'])), (0, _defineProperty3.default)(_ref, 'required', require('prop-types').bool), (0, _defineProperty3.default)(_ref, 'shrink', require('prop-types').bool), _ref) : {};
 InputLabel.defaultProps = {
   disabled: false,
-  disableAnimation: false,
+  disableAnimation: false
 };
 
 InputLabel.contextTypes = {
-  muiFormControl: PropTypes.object,
+  muiFormControl: _propTypes2.default.object
 };
 
-export default withStyles(styles, { name: 'MuiInputLabel' })(InputLabel);
+exports.default = (0, _withStyles2.default)(styles, { name: 'MuiInputLabel' })(InputLabel);

@@ -1,27 +1,94 @@
-// @flow
+'use strict';
 
-import React from 'react';
-import type { Node, Element } from 'react';
-import classNames from 'classnames';
-import EventListener from 'react-event-listener';
-import withStyles from '../styles/withStyles';
-import { duration } from '../styles/transitions';
-import ClickAwayListener from '../internal/ClickAwayListener';
-import { capitalizeFirstLetter, createChainedFunction } from '../utils/helpers';
-import Slide from '../transitions/Slide';
-import SnackbarContent from './SnackbarContent';
-import type { TransitionCallback } from '../internal/Transition';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.styles = undefined;
 
-export const styles = (theme: Object) => {
-  const gutter = theme.spacing.unit * 3;
-  const top = { top: 0 };
-  const bottom = { bottom: 0 };
-  const right = { justifyContent: 'flex-end' };
-  const left = { justifyContent: 'flex-start' };
-  const topSpace = { top: gutter };
-  const bottomSpace = { bottom: gutter };
-  const rightSpace = { right: gutter };
-  const leftSpace = { left: gutter };
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = require('babel-runtime/helpers/inherits');
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _ref2, _ref3;
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _reactEventListener = require('react-event-listener');
+
+var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
+
+var _withStyles = require('../styles/withStyles');
+
+var _withStyles2 = _interopRequireDefault(_withStyles);
+
+var _transitions = require('../styles/transitions');
+
+var _ClickAwayListener = require('../internal/ClickAwayListener');
+
+var _ClickAwayListener2 = _interopRequireDefault(_ClickAwayListener);
+
+var _helpers = require('../utils/helpers');
+
+var _Slide = require('../transitions/Slide');
+
+var _Slide2 = _interopRequireDefault(_Slide);
+
+var _SnackbarContent = require('./SnackbarContent');
+
+var _SnackbarContent2 = _interopRequireDefault(_SnackbarContent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var babelPluginFlowReactPropTypes_proptype_Element = require('react').babelPluginFlowReactPropTypes_proptype_Element || require('prop-types').any;
+
+var babelPluginFlowReactPropTypes_proptype_Node = require('react').babelPluginFlowReactPropTypes_proptype_Node || require('prop-types').any;
+
+var babelPluginFlowReactPropTypes_proptype_TransitionCallback = require('../internal/Transition').babelPluginFlowReactPropTypes_proptype_TransitionCallback || require('prop-types').any;
+
+var styles = exports.styles = function styles(theme) {
+  var gutter = theme.spacing.unit * 3;
+  var top = { top: 0 };
+  var bottom = { bottom: 0 };
+  var right = { justifyContent: 'flex-end' };
+  var left = { justifyContent: 'flex-start' };
+  var topSpace = { top: gutter };
+  var bottomSpace = { bottom: gutter };
+  var rightSpace = { right: gutter };
+  var leftSpace = { left: gutter };
 
   return {
     root: {
@@ -32,341 +99,276 @@ export const styles = (theme: Object) => {
       right: 0,
       justifyContent: 'center',
       alignItems: 'center',
-      pointerEvents: 'none',
+      pointerEvents: 'none'
     },
     anchorTopCenter: {
-      extend: [top],
+      extend: [top]
     },
     anchorBottomCenter: {
-      extend: [bottom],
+      extend: [bottom]
     },
-    anchorTopRight: {
-      extend: [top, right],
-      [theme.breakpoints.up('md')]: {
-        extend: [topSpace, rightSpace],
-      },
-    },
-    anchorBottomRight: {
-      extend: [bottom, right],
-      [theme.breakpoints.up('md')]: {
-        extend: [bottomSpace, rightSpace],
-      },
-    },
-    anchorTopLeft: {
-      extend: [top, left],
-      [theme.breakpoints.up('md')]: {
-        extend: [topSpace, leftSpace],
-      },
-    },
-    anchorBottomLeft: {
-      extend: [bottom, left],
-      [theme.breakpoints.up('md')]: {
-        extend: [bottomSpace, leftSpace],
-      },
-    },
+    anchorTopRight: (0, _defineProperty3.default)({
+      extend: [top, right]
+    }, theme.breakpoints.up('md'), {
+      extend: [topSpace, rightSpace]
+    }),
+    anchorBottomRight: (0, _defineProperty3.default)({
+      extend: [bottom, right]
+    }, theme.breakpoints.up('md'), {
+      extend: [bottomSpace, rightSpace]
+    }),
+    anchorTopLeft: (0, _defineProperty3.default)({
+      extend: [top, left]
+    }, theme.breakpoints.up('md'), {
+      extend: [topSpace, leftSpace]
+    }),
+    anchorBottomLeft: (0, _defineProperty3.default)({
+      extend: [bottom, left]
+    }, theme.breakpoints.up('md'), {
+      extend: [bottomSpace, leftSpace]
+    })
   };
 };
 
-type Origin = {
-  horizontal?: 'left' | 'center' | 'right' | number,
-  vertical?: 'top' | 'center' | 'bottom' | number,
+var babelPluginFlowReactPropTypes_proptype_Props = {
+  action: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node),
+  anchorOrigin: require('prop-types').shape({
+    horizontal: require('prop-types').oneOfType([require('prop-types').oneOf(['left']), require('prop-types').oneOf(['center']), require('prop-types').oneOf(['right']), require('prop-types').number]),
+    vertical: require('prop-types').oneOfType([require('prop-types').oneOf(['top']), require('prop-types').oneOf(['center']), require('prop-types').oneOf(['bottom']), require('prop-types').number])
+  }),
+  autoHideDuration: require('prop-types').number,
+  children: typeof babelPluginFlowReactPropTypes_proptype_Element === 'function' ? babelPluginFlowReactPropTypes_proptype_Element : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Element),
+  classes: require('prop-types').object,
+  className: require('prop-types').string,
+  enterTransitionDuration: require('prop-types').number,
+  key: require('prop-types').any,
+  leaveTransitionDuration: require('prop-types').number,
+  message: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node),
+  onEnter: typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback),
+  onEntering: typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback),
+  onEntered: typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback),
+  onExit: typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback),
+  onExiting: typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback),
+  onExited: typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback),
+  onMouseEnter: require('prop-types').func,
+  onMouseLeave: require('prop-types').func,
+  onRequestClose: require('prop-types').func,
+  open: require('prop-types').bool.isRequired,
+  SnackbarContentProps: require('prop-types').object,
+  transition: typeof babelPluginFlowReactPropTypes_proptype_Element === 'function' ? babelPluginFlowReactPropTypes_proptype_Element : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Element)
 };
 
-type DefaultProps = {
-  anchorOrigin: Origin,
-  autoHideDuration: ?number,
-  classes: Object,
-};
+var Snackbar = function (_React$Component) {
+  (0, _inherits3.default)(Snackbar, _React$Component);
 
-export type Props = {
-  /**
-   * The action to display.
-   */
-  action?: Node,
-  /**
-   * The anchor of the `Snackbar`.
-   */
-  anchorOrigin?: Origin,
-  /**
-   * The number of milliseconds to wait before automatically dismissing.
-   * This behavior is disabled by default with the `null` value.
-   */
-  autoHideDuration?: number,
-  /**
-   * If you wish the take control over the children of the component you can use that property.
-   * When using it, no `SnackbarContent` component will be rendered.
-   */
-  children?: Element<*>,
-  /**
-   * Useful to extend the style applied to components.
-   */
-  classes?: Object,
-  /**
-   * @ignore
-   */
-  className?: string,
-  /**
-   * Customizes duration of enter animation (ms)
-   */
-  enterTransitionDuration?: number,
-  /**
-   * When displaying multiple consecutive Snackbars from a parent rendering a single
-   * <Snackbar/>, add the key property to ensure independent treatment of each message.
-   * e.g. <Snackbar key={message} />, otherwise, the message may update-in-place and
-   * features such as autoHideDuration may be canceled.
-   */
-  key?: any,
-  /**
-   * Customizes duration of leave animation (ms)
-   */
-  leaveTransitionDuration?: number,
-  /**
-   * The message to display.
-   */
-  message?: Node,
-  /**
-   * Callback fired before the transition is entering.
-   */
-  onEnter?: TransitionCallback,
-  /**
-   * Callback fired when the transition is entering.
-   */
-  onEntering?: TransitionCallback,
-  /**
-   * Callback fired when the transition has entered.
-   */
-  onEntered?: TransitionCallback,
-  /**
-   * Callback fired before the transition is exiting.
-   */
-  onExit?: TransitionCallback,
-  /**
-   * Callback fired when the transition is exiting.
-   */
-  onExiting?: TransitionCallback,
-  /**
-   * Callback fired when the transition has exited.
-   */
-  onExited?: TransitionCallback,
-  /**
-   * @ignore
-   */
-  onMouseEnter?: Function,
-  /**
-   * @ignore
-   */
-  onMouseLeave?: Function,
-  /**
-   * Callback fired when the component requests to be closed.
-   *
-   * Typically `onRequestClose` is used to set state in the parent component,
-   * which is used to control the `Snackbar` `open` prop.
-   *
-   * The `reason` parameter can optionally be used to control the response to `onRequestClose`,
-   * for example ignoring `clickaway`.
-   *
-   * @param {object} event The event source of the callback
-   * @param {string} reason Can be:`"timeout"` (`autoHideDuration` expired) or: `"clickaway"`
-   */
-  onRequestClose?: (event: ?Event, reason: string) => void,
-  /**
-   * If true, `Snackbar` is open.
-   */
-  open: boolean,
-  /**
-   * Properties applied to the `SnackbarContent` element.
-   */
-  SnackbarContentProps?: Object,
-  /**
-   * Object with Transition component, props & create Fn.
-   */
-  transition?: Element<*>,
-};
+  function Snackbar() {
+    var _ref;
 
-type AllProps = DefaultProps & Props;
+    var _temp, _this, _ret;
 
-type State = {
-  exited: boolean,
-};
+    (0, _classCallCheck3.default)(this, Snackbar);
 
-class Snackbar extends React.Component<AllProps, State> {
-  props: AllProps;
-  static defaultProps = {
-    anchorOrigin: { vertical: 'bottom', horizontal: 'center' },
-    autoHideDuration: null,
-    classes: {},
-    enterTransitionDuration: duration.enteringScreen,
-    leaveTransitionDuration: duration.leavingScreen,
-  };
-
-  state = {
-    // Used to only render active snackbars.
-    exited: false,
-  };
-
-  componentWillMount() {
-    if (!this.props.open) {
-      this.setState({ exited: true });
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
     }
+
+    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Snackbar.__proto__ || (0, _getPrototypeOf2.default)(Snackbar)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      // Used to only render active snackbars.
+      exited: false
+    }, _this.timerAutoHide = null, _this.handleMouseEnter = function (event) {
+      if (_this.props.onMouseEnter) {
+        _this.props.onMouseEnter(event);
+      }
+      _this.handlePause();
+    }, _this.handleMouseLeave = function (event) {
+      if (_this.props.onMouseLeave) {
+        _this.props.onMouseLeave(event);
+      }
+      _this.handleResume();
+    }, _this.handleClickAway = function (event) {
+      if (_this.props.onRequestClose) {
+        _this.props.onRequestClose(event, 'clickaway');
+      }
+    }, _this.handlePause = function () {
+      clearTimeout(_this.timerAutoHide);
+    }, _this.handleResume = function () {
+      if (_this.props.autoHideDuration !== null) {
+        _this.setAutoHideTimer(_this.props.autoHideDuration * 0.5);
+      }
+    }, _this.handleTransitionExited = function () {
+      _this.setState({ exited: true });
+    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
-  componentDidMount() {
-    if (this.props.open) {
-      this.setAutoHideTimer();
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.open && this.state.exited) {
-      this.setState({ exited: false });
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.open !== this.props.open) {
-      if (this.props.open) {
-        this.setAutoHideTimer();
-      } else {
-        clearTimeout(this.timerAutoHide);
+  (0, _createClass3.default)(Snackbar, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      if (!this.props.open) {
+        this.setState({ exited: true });
       }
     }
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.timerAutoHide);
-  }
-
-  timerAutoHide = null;
-
-  // Timer that controls delay before snackbar auto hides
-  setAutoHideTimer(autoHideDuration = null) {
-    if (!this.props.onRequestClose || this.props.autoHideDuration === null) {
-      return;
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (this.props.open) {
+        this.setAutoHideTimer();
+      }
     }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.open && this.state.exited) {
+        this.setState({ exited: false });
+      }
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.open !== this.props.open) {
+        if (this.props.open) {
+          this.setAutoHideTimer();
+        } else {
+          clearTimeout(this.timerAutoHide);
+        }
+      }
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      clearTimeout(this.timerAutoHide);
+    }
+  }, {
+    key: 'setAutoHideTimer',
 
-    clearTimeout(this.timerAutoHide);
-    this.timerAutoHide = setTimeout(() => {
+
+    // Timer that controls delay before snackbar auto hides
+    value: function setAutoHideTimer() {
+      var _this2 = this;
+
+      var autoHideDuration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
       if (!this.props.onRequestClose || this.props.autoHideDuration === null) {
         return;
       }
 
-      this.props.onRequestClose(null, 'timeout');
-    }, autoHideDuration || this.props.autoHideDuration);
-  }
+      clearTimeout(this.timerAutoHide);
+      this.timerAutoHide = setTimeout(function () {
+        if (!_this2.props.onRequestClose || _this2.props.autoHideDuration === null) {
+          return;
+        }
 
-  handleMouseEnter = (event: SyntheticUIEvent<>) => {
-    if (this.props.onMouseEnter) {
-      this.props.onMouseEnter(event);
-    }
-    this.handlePause();
-  };
-
-  handleMouseLeave = (event: SyntheticUIEvent<>) => {
-    if (this.props.onMouseLeave) {
-      this.props.onMouseLeave(event);
-    }
-    this.handleResume();
-  };
-
-  handleClickAway = (event: Event) => {
-    if (this.props.onRequestClose) {
-      this.props.onRequestClose(event, 'clickaway');
-    }
-  };
-
-  // Pause the timer when the user is interacting with the Snackbar or when he can't see it.
-  handlePause = () => {
-    clearTimeout(this.timerAutoHide);
-  };
-
-  handleResume = () => {
-    if (this.props.autoHideDuration !== null) {
-      this.setAutoHideTimer(this.props.autoHideDuration * 0.5);
-    }
-  };
-
-  handleTransitionExited = () => {
-    this.setState({ exited: true });
-  };
-
-  render() {
-    const {
-      action,
-      anchorOrigin: { vertical, horizontal },
-      autoHideDuration,
-      children,
-      classes,
-      className,
-      enterTransitionDuration,
-      leaveTransitionDuration,
-      message,
-      onEnter,
-      onEntering,
-      onEntered,
-      onExit,
-      onExiting,
-      onExited,
-      onMouseEnter,
-      onMouseLeave,
-      onRequestClose,
-      open,
-      SnackbarContentProps,
-      transition: transitionProp,
-      ...other
-    } = this.props;
-
-    if (!open && this.state.exited) {
-      return null;
+        _this2.props.onRequestClose(null, 'timeout');
+      }, autoHideDuration || this.props.autoHideDuration);
     }
 
-    const transitionProps = {
-      in: open,
-      transitionAppear: true,
-      enterTransitionDuration,
-      leaveTransitionDuration,
-      onEnter,
-      onEntering,
-      onEntered,
-      onExit,
-      onExiting,
-      onExited: createChainedFunction(this.handleTransitionExited, onExited),
-    };
-    const transitionContent = children || (
-      <SnackbarContent message={message} action={action} {...SnackbarContentProps} />
-    );
+    // Pause the timer when the user is interacting with the Snackbar or when he can't see it.
 
-    let transition;
-    if (typeof transitionProp === 'function') {
-      transition = React.createElement(transitionProp, transitionProps, transitionContent);
-    } else {
-      transition = React.cloneElement(
-        transitionProp || <Slide direction={vertical === 'top' ? 'down' : 'up'} />,
-        transitionProps,
-        transitionContent,
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          action = _props.action,
+          _props$anchorOrigin = _props.anchorOrigin,
+          vertical = _props$anchorOrigin.vertical,
+          horizontal = _props$anchorOrigin.horizontal,
+          autoHideDuration = _props.autoHideDuration,
+          children = _props.children,
+          classes = _props.classes,
+          className = _props.className,
+          enterTransitionDuration = _props.enterTransitionDuration,
+          leaveTransitionDuration = _props.leaveTransitionDuration,
+          message = _props.message,
+          onEnter = _props.onEnter,
+          onEntering = _props.onEntering,
+          onEntered = _props.onEntered,
+          onExit = _props.onExit,
+          onExiting = _props.onExiting,
+          onExited = _props.onExited,
+          onMouseEnter = _props.onMouseEnter,
+          onMouseLeave = _props.onMouseLeave,
+          onRequestClose = _props.onRequestClose,
+          open = _props.open,
+          SnackbarContentProps = _props.SnackbarContentProps,
+          transitionProp = _props.transition,
+          other = (0, _objectWithoutProperties3.default)(_props, ['action', 'anchorOrigin', 'autoHideDuration', 'children', 'classes', 'className', 'enterTransitionDuration', 'leaveTransitionDuration', 'message', 'onEnter', 'onEntering', 'onEntered', 'onExit', 'onExiting', 'onExited', 'onMouseEnter', 'onMouseLeave', 'onRequestClose', 'open', 'SnackbarContentProps', 'transition']);
+
+
+      if (!open && this.state.exited) {
+        return null;
+      }
+
+      var transitionProps = {
+        in: open,
+        transitionAppear: true,
+        enterTransitionDuration: enterTransitionDuration,
+        leaveTransitionDuration: leaveTransitionDuration,
+        onEnter: onEnter,
+        onEntering: onEntering,
+        onEntered: onEntered,
+        onExit: onExit,
+        onExiting: onExiting,
+        onExited: (0, _helpers.createChainedFunction)(this.handleTransitionExited, onExited)
+      };
+      var transitionContent = children || _react2.default.createElement(_SnackbarContent2.default, (0, _extends3.default)({ message: message, action: action }, SnackbarContentProps));
+
+      var transition = void 0;
+      if (typeof transitionProp === 'function') {
+        transition = _react2.default.createElement(transitionProp, transitionProps, transitionContent);
+      } else {
+        transition = _react2.default.cloneElement(transitionProp || _react2.default.createElement(_Slide2.default, { direction: vertical === 'top' ? 'down' : 'up' }), transitionProps, transitionContent);
+      }
+
+      return _react2.default.createElement(
+        _reactEventListener2.default,
+        { target: 'window', onFocus: this.handleResume, onBlur: this.handlePause },
+        _react2.default.createElement(
+          _ClickAwayListener2.default,
+          { onClickAway: this.handleClickAway },
+          _react2.default.createElement(
+            'div',
+            (0, _extends3.default)({
+              className: (0, _classnames2.default)(classes.root, classes['anchor' + (0, _helpers.capitalizeFirstLetter)(vertical) + (0, _helpers.capitalizeFirstLetter)(horizontal)], className),
+              onMouseEnter: this.handleMouseEnter,
+              onMouseLeave: this.handleMouseLeave
+            }, other),
+            transition
+          )
+        )
       );
     }
+  }]);
+  return Snackbar;
+}(_react2.default.Component);
 
-    return (
-      <EventListener target="window" onFocus={this.handleResume} onBlur={this.handlePause}>
-        <ClickAwayListener onClickAway={this.handleClickAway}>
-          <div
-            className={classNames(
-              classes.root,
-              classes[
-                `anchor${capitalizeFirstLetter(vertical)}${capitalizeFirstLetter(horizontal)}`
-              ],
-              className,
-            )}
-            onMouseEnter={this.handleMouseEnter}
-            onMouseLeave={this.handleMouseLeave}
-            {...other}
-          >
-            {transition}
-          </div>
-        </ClickAwayListener>
-      </EventListener>
-    );
-  }
-}
-
-export default withStyles(styles, { name: 'MuiSnackbar' })(Snackbar);
+Snackbar.defaultProps = {
+  anchorOrigin: { vertical: 'bottom', horizontal: 'center' },
+  autoHideDuration: null,
+  classes: {},
+  enterTransitionDuration: _transitions.duration.enteringScreen,
+  leaveTransitionDuration: _transitions.duration.leavingScreen
+};
+Snackbar.propTypes = process.env.NODE_ENV !== "production" ? (_ref2 = {
+  anchorOrigin: require('prop-types').shape({
+    horizontal: require('prop-types').oneOfType([require('prop-types').oneOf(['left']), require('prop-types').oneOf(['center']), require('prop-types').oneOf(['right']), require('prop-types').number]),
+    vertical: require('prop-types').oneOfType([require('prop-types').oneOf(['top']), require('prop-types').oneOf(['center']), require('prop-types').oneOf(['bottom']), require('prop-types').number])
+  }).isRequired,
+  autoHideDuration: require('prop-types').number,
+  classes: require('prop-types').object.isRequired,
+  action: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node)
+}, (0, _defineProperty3.default)(_ref2, 'anchorOrigin', require('prop-types').shape({
+  horizontal: require('prop-types').oneOfType([require('prop-types').oneOf(['left']), require('prop-types').oneOf(['center']), require('prop-types').oneOf(['right']), require('prop-types').number]),
+  vertical: require('prop-types').oneOfType([require('prop-types').oneOf(['top']), require('prop-types').oneOf(['center']), require('prop-types').oneOf(['bottom']), require('prop-types').number])
+})), (0, _defineProperty3.default)(_ref2, 'autoHideDuration', require('prop-types').number), (0, _defineProperty3.default)(_ref2, 'children', typeof babelPluginFlowReactPropTypes_proptype_Element === 'function' ? babelPluginFlowReactPropTypes_proptype_Element : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Element)), (0, _defineProperty3.default)(_ref2, 'classes', require('prop-types').object), (0, _defineProperty3.default)(_ref2, 'className', require('prop-types').string), (0, _defineProperty3.default)(_ref2, 'enterTransitionDuration', require('prop-types').number), (0, _defineProperty3.default)(_ref2, 'key', require('prop-types').any), (0, _defineProperty3.default)(_ref2, 'leaveTransitionDuration', require('prop-types').number), (0, _defineProperty3.default)(_ref2, 'message', typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node)), (0, _defineProperty3.default)(_ref2, 'onEnter', typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback)), (0, _defineProperty3.default)(_ref2, 'onEntering', typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback)), (0, _defineProperty3.default)(_ref2, 'onEntered', typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback)), (0, _defineProperty3.default)(_ref2, 'onExit', typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback)), (0, _defineProperty3.default)(_ref2, 'onExiting', typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback)), (0, _defineProperty3.default)(_ref2, 'onExited', typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback)), (0, _defineProperty3.default)(_ref2, 'onMouseEnter', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'onMouseLeave', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'onRequestClose', require('prop-types').func), (0, _defineProperty3.default)(_ref2, 'open', require('prop-types').bool.isRequired), (0, _defineProperty3.default)(_ref2, 'SnackbarContentProps', require('prop-types').object), (0, _defineProperty3.default)(_ref2, 'transition', typeof babelPluginFlowReactPropTypes_proptype_Element === 'function' ? babelPluginFlowReactPropTypes_proptype_Element : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Element)), _ref2) : {};
+Snackbar.propTypes = process.env.NODE_ENV !== "production" ? (_ref3 = {
+  anchorOrigin: require('prop-types').shape({
+    horizontal: require('prop-types').oneOfType([require('prop-types').oneOf(['left']), require('prop-types').oneOf(['center']), require('prop-types').oneOf(['right']), require('prop-types').number]),
+    vertical: require('prop-types').oneOfType([require('prop-types').oneOf(['top']), require('prop-types').oneOf(['center']), require('prop-types').oneOf(['bottom']), require('prop-types').number])
+  }).isRequired,
+  autoHideDuration: require('prop-types').number,
+  classes: require('prop-types').object.isRequired,
+  action: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node)
+}, (0, _defineProperty3.default)(_ref3, 'anchorOrigin', require('prop-types').shape({
+  horizontal: require('prop-types').oneOfType([require('prop-types').oneOf(['left']), require('prop-types').oneOf(['center']), require('prop-types').oneOf(['right']), require('prop-types').number]),
+  vertical: require('prop-types').oneOfType([require('prop-types').oneOf(['top']), require('prop-types').oneOf(['center']), require('prop-types').oneOf(['bottom']), require('prop-types').number])
+})), (0, _defineProperty3.default)(_ref3, 'autoHideDuration', require('prop-types').number), (0, _defineProperty3.default)(_ref3, 'children', typeof babelPluginFlowReactPropTypes_proptype_Element === 'function' ? babelPluginFlowReactPropTypes_proptype_Element : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Element)), (0, _defineProperty3.default)(_ref3, 'classes', require('prop-types').object), (0, _defineProperty3.default)(_ref3, 'className', require('prop-types').string), (0, _defineProperty3.default)(_ref3, 'enterTransitionDuration', require('prop-types').number), (0, _defineProperty3.default)(_ref3, 'key', require('prop-types').any), (0, _defineProperty3.default)(_ref3, 'leaveTransitionDuration', require('prop-types').number), (0, _defineProperty3.default)(_ref3, 'message', typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node)), (0, _defineProperty3.default)(_ref3, 'onEnter', typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback)), (0, _defineProperty3.default)(_ref3, 'onEntering', typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback)), (0, _defineProperty3.default)(_ref3, 'onEntered', typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback)), (0, _defineProperty3.default)(_ref3, 'onExit', typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback)), (0, _defineProperty3.default)(_ref3, 'onExiting', typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback)), (0, _defineProperty3.default)(_ref3, 'onExited', typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback)), (0, _defineProperty3.default)(_ref3, 'onMouseEnter', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'onMouseLeave', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'onRequestClose', require('prop-types').func), (0, _defineProperty3.default)(_ref3, 'open', require('prop-types').bool.isRequired), (0, _defineProperty3.default)(_ref3, 'SnackbarContentProps', require('prop-types').object), (0, _defineProperty3.default)(_ref3, 'transition', typeof babelPluginFlowReactPropTypes_proptype_Element === 'function' ? babelPluginFlowReactPropTypes_proptype_Element : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Element)), _ref3) : {};
+exports.default = (0, _withStyles2.default)(styles, { name: 'MuiSnackbar' })(Snackbar);

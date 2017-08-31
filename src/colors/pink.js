@@ -1,7 +1,12 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 // Wait https://github.com/facebook/flow/issues/380 to be fixed
 /* eslint-disable flowtype/require-valid-file-annotation */
 
-const pink = {
+var pink = {
   50: '#fce4ec',
   100: '#f8bbd0',
   200: '#f48fb1',
@@ -16,7 +21,7 @@ const pink = {
   A200: '#ff4081',
   A400: '#f50057',
   A700: '#c51162',
-  contrastDefaultColor: 'light',
+  contrastDefaultColor: 'light'
 };
 
-export default pink;
+exports.default = pink;

@@ -1,3 +1,16 @@
-// @flow
+'use strict';
 
-export { default } from './Paper';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Paper = require('./Paper');
+
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_Paper).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

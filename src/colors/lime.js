@@ -1,7 +1,12 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 // Wait https://github.com/facebook/flow/issues/380 to be fixed
 /* eslint-disable flowtype/require-valid-file-annotation */
 
-const lime = {
+var lime = {
   50: '#f9fbe7',
   100: '#f0f4c3',
   200: '#e6ee9c',
@@ -16,7 +21,7 @@ const lime = {
   A200: '#eeff41',
   A400: '#c6ff00',
   A700: '#aeea00',
-  contrastDefaultColor: 'dark',
+  contrastDefaultColor: 'dark'
 };
 
-export default lime;
+exports.default = lime;

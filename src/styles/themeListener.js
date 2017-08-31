@@ -1,32 +1,43 @@
-// @flow
+'use strict';
 
-import PropTypes from 'prop-types';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.CHANNEL = undefined;
 
-export const CHANNEL = 'material-ui';
+var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
-const themeListener = {
-  contextTypes: {
-    [CHANNEL]: PropTypes.object,
-  },
-  initial: (context: Object) => {
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var CHANNEL = exports.CHANNEL = 'material-ui';
+
+var themeListener = {
+  contextTypes: (0, _defineProperty3.default)({}, CHANNEL, _propTypes2.default.object),
+  initial: function initial(context) {
     if (!context[CHANNEL]) {
       return null;
     }
 
     return context[CHANNEL].getState();
   },
-  subscribe: (context: Object, cb: Function) => {
+  subscribe: function subscribe(context, cb) {
     if (!context[CHANNEL]) {
       return null;
     }
 
     return context[CHANNEL].subscribe(cb);
   },
-  unsubscribe(context: Object, subscriptionId: number) {
+  unsubscribe: function unsubscribe(context, subscriptionId) {
     if (context[CHANNEL]) {
       context[CHANNEL].unsubscribe(subscriptionId);
     }
-  },
+  }
 };
 
-export default themeListener;
+exports.default = themeListener;

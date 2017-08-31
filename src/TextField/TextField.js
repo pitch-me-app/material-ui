@@ -1,216 +1,153 @@
-// @flow
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Input = require('../Input');
+
+var _Input2 = _interopRequireDefault(_Input);
+
+var _FormControl = require('../Form/FormControl');
+
+var _FormControl2 = _interopRequireDefault(_FormControl);
+
+var _FormHelperText = require('../Form/FormHelperText');
+
+var _FormHelperText2 = _interopRequireDefault(_FormHelperText);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var babelPluginFlowReactPropTypes_proptype_Node = require('react').babelPluginFlowReactPropTypes_proptype_Node || require('prop-types').any;
 // @inheritedComponent FormControl
 
-import React from 'react';
-import type { Node } from 'react';
-import Input, { InputLabel } from '../Input';
-import FormControl from '../Form/FormControl';
-import FormHelperText from '../Form/FormHelperText';
-
-export type Props = {
-  /**
-   * This property helps users to fill forms faster, especially on mobile devices.
-   * The name can be confusion, it's more like an autofill.
-   * You can learn about it with that article
-   * https://developers.google.com/web/updates/2015/06/checkout-faster-with-autofill
-   */
-  autoComplete?: string,
-  /**
-   * If `true`, the input will be focused during the first mount.
-   */
-  autoFocus?: boolean,
-  /**
-   * @ignore
-   */
-  className?: string,
-  /**
-   * The default value of the `Input` element.
-   */
-  defaultValue?: string,
-  /**
-   * If `true`, the input will be disabled.
-   */
-  disabled?: boolean,
-  /**
-   * If `true`, the label will be displayed in an error state.
-   */
-  error?: boolean,
-  /**
-   * Properties applied to the `FormHelperText` element.
-   */
-  FormHelperTextProps?: Object,
-  /**
-   * If `true`, the input will take up the full width of its container.
-   */
-  fullWidth?: boolean,
-  /**
-   * The helper text content.
-   */
-  helperText?: Node,
-  /**
-   * The CSS class name of the helper text element.
-   */
-  helperTextClassName?: string,
-  /**
-   * The id of the `input` element.
-   */
-  id?: string,
-  /**
-   * The CSS class name of the `input` element.
-   */
-  inputClassName?: string,
-  /**
-   * The CSS class name of the `Input` element.
-   */
-  InputClassName?: string,
-  /**
-   * Properties applied to the `InputLabel` element.
-   */
-  InputLabelProps?: Object,
-  /**
-   * Properties applied to the `input` element.
-   */
-  inputProps?: Object,
-  /**
-   * Properties applied to the `Input` element.
-   */
-  InputProps?: Object,
-  /**
-   * Use that property to pass a ref callback to the native input component.
-   */
-  inputRef?: Function,
-  /**
-   * The label content.
-   */
-  label?: Node,
-  /**
-   * The CSS class name of the label element.
-   */
-  labelClassName?: string,
-  /**
-   * If `true`, a textarea element will be rendered instead of an input.
-   */
-  multiline?: boolean,
-  /**
-   * Name attribute of the `Input` element.
-   */
-  name?: string,
-  placeholder?: string,
-  /**
-   * If `true`, the label is displayed as required.
-   */
-  required?: boolean,
-  /**
-   * Use that property to pass a ref callback to the root component.
-   */
-  rootRef?: Function,
-  /**
-   * Number of rows to display when multiline option is set to true.
-   */
-  rows?: string | number,
-  /**
-   * Maximum number of rows to display when multiline option is set to true.
-   */
-  rowsMax?: string | number,
-  /**
-   * Type attribute of the `Input` element. It should be a valid HTML5 input type.
-   */
-  type?: string,
-  /**
-   * The value of the `Input` element, required for a controlled component.
-   */
-  value?: string | number,
-  /**
-   * If `dense` | `normal`, will adjust vertical spacing of this and contained components.
-   */
-  margin?: 'none' | 'dense' | 'normal',
+var babelPluginFlowReactPropTypes_proptype_Props = {
+  autoComplete: require('prop-types').string,
+  autoFocus: require('prop-types').bool,
+  className: require('prop-types').string,
+  defaultValue: require('prop-types').string,
+  disabled: require('prop-types').bool,
+  error: require('prop-types').bool,
+  FormHelperTextProps: require('prop-types').object,
+  fullWidth: require('prop-types').bool,
+  helperText: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node),
+  helperTextClassName: require('prop-types').string,
+  id: require('prop-types').string,
+  inputClassName: require('prop-types').string,
+  InputClassName: require('prop-types').string,
+  InputLabelProps: require('prop-types').object,
+  inputProps: require('prop-types').object,
+  InputProps: require('prop-types').object,
+  inputRef: require('prop-types').func,
+  label: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node),
+  labelClassName: require('prop-types').string,
+  multiline: require('prop-types').bool,
+  name: require('prop-types').string,
+  placeholder: require('prop-types').string,
+  required: require('prop-types').bool,
+  rootRef: require('prop-types').func,
+  rows: require('prop-types').oneOfType([require('prop-types').string, require('prop-types').number]),
+  rowsMax: require('prop-types').oneOfType([require('prop-types').string, require('prop-types').number]),
+  type: require('prop-types').string,
+  value: require('prop-types').oneOfType([require('prop-types').string, require('prop-types').number]),
+  margin: require('prop-types').oneOf(['none', 'dense', 'normal'])
 };
 
-function TextField(props: Props) {
-  const {
-    autoComplete,
-    autoFocus,
-    className,
-    defaultValue,
-    disabled,
-    error,
-    id,
-    inputClassName,
-    InputClassName,
-    inputProps: inputPropsProp,
-    InputProps,
-    inputRef,
-    label,
-    labelClassName,
-    InputLabelProps,
-    helperText,
-    helperTextClassName,
-    FormHelperTextProps,
-    fullWidth,
-    required,
-    type,
-    multiline,
-    name,
-    placeholder,
-    rootRef,
-    rows,
-    rowsMax,
-    value,
-    ...other
-  } = props;
 
-  let inputProps = inputPropsProp;
+function TextField(props) {
+  var autoComplete = props.autoComplete,
+      autoFocus = props.autoFocus,
+      className = props.className,
+      defaultValue = props.defaultValue,
+      disabled = props.disabled,
+      error = props.error,
+      id = props.id,
+      inputClassName = props.inputClassName,
+      InputClassName = props.InputClassName,
+      inputPropsProp = props.inputProps,
+      InputProps = props.InputProps,
+      inputRef = props.inputRef,
+      label = props.label,
+      labelClassName = props.labelClassName,
+      InputLabelProps = props.InputLabelProps,
+      helperText = props.helperText,
+      helperTextClassName = props.helperTextClassName,
+      FormHelperTextProps = props.FormHelperTextProps,
+      fullWidth = props.fullWidth,
+      required = props.required,
+      type = props.type,
+      multiline = props.multiline,
+      name = props.name,
+      placeholder = props.placeholder,
+      rootRef = props.rootRef,
+      rows = props.rows,
+      rowsMax = props.rowsMax,
+      value = props.value,
+      other = (0, _objectWithoutProperties3.default)(props, ['autoComplete', 'autoFocus', 'className', 'defaultValue', 'disabled', 'error', 'id', 'inputClassName', 'InputClassName', 'inputProps', 'InputProps', 'inputRef', 'label', 'labelClassName', 'InputLabelProps', 'helperText', 'helperTextClassName', 'FormHelperTextProps', 'fullWidth', 'required', 'type', 'multiline', 'name', 'placeholder', 'rootRef', 'rows', 'rowsMax', 'value']);
+
+
+  var inputProps = inputPropsProp;
 
   if (inputClassName) {
-    inputProps = {
-      className: inputClassName,
-      ...inputProps,
-    };
+    inputProps = (0, _extends3.default)({
+      className: inputClassName
+    }, inputProps);
   }
 
-  return (
-    <FormControl
-      fullWidth={fullWidth}
-      ref={rootRef}
-      className={className}
-      error={error}
-      required={required}
-      {...other}
-    >
-      {label && (
-        <InputLabel htmlFor={id} className={labelClassName} {...InputLabelProps}>
-          {label}
-        </InputLabel>
-      )}
-      <Input
-        autoComplete={autoComplete}
-        autoFocus={autoFocus}
-        className={InputClassName}
-        defaultValue={defaultValue}
-        disabled={disabled}
-        multiline={multiline}
-        name={name}
-        rows={rows}
-        rowsMax={rowsMax}
-        type={type}
-        value={value}
-        id={id}
-        inputProps={inputProps}
-        inputRef={inputRef}
-        placeholder={placeholder}
-        {...InputProps}
-      />
-      {helperText && (
-        <FormHelperText className={helperTextClassName} {...FormHelperTextProps}>
-          {helperText}
-        </FormHelperText>
-      )}
-    </FormControl>
+  return _react2.default.createElement(
+    _FormControl2.default,
+    (0, _extends3.default)({
+      fullWidth: fullWidth,
+      ref: rootRef,
+      className: className,
+      error: error,
+      required: required
+    }, other),
+    label && _react2.default.createElement(
+      _Input.InputLabel,
+      (0, _extends3.default)({ htmlFor: id, className: labelClassName }, InputLabelProps),
+      label
+    ),
+    _react2.default.createElement(_Input2.default, (0, _extends3.default)({
+      autoComplete: autoComplete,
+      autoFocus: autoFocus,
+      className: InputClassName,
+      defaultValue: defaultValue,
+      disabled: disabled,
+      multiline: multiline,
+      name: name,
+      rows: rows,
+      rowsMax: rowsMax,
+      type: type,
+      value: value,
+      id: id,
+      inputProps: inputProps,
+      inputRef: inputRef,
+      placeholder: placeholder
+    }, InputProps)),
+    helperText && _react2.default.createElement(
+      _FormHelperText2.default,
+      (0, _extends3.default)({ className: helperTextClassName }, FormHelperTextProps),
+      helperText
+    )
   );
 }
 
+TextField.propTypes = process.env.NODE_ENV !== "production" ? babelPluginFlowReactPropTypes_proptype_Props : {};
 TextField.defaultProps = {
-  required: false,
+  required: false
 };
 
-export default TextField;
+exports.default = TextField;

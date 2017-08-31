@@ -1,3 +1,16 @@
-// @flow
+'use strict';
 
-export { default } from './Chip';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Chip = require('./Chip');
+
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_Chip).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

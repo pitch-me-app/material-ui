@@ -1,65 +1,84 @@
-// @flow
+'use strict';
 
-import React from 'react';
-import type { Node } from 'react';
-import classNames from 'classnames';
-import withStyles from '../styles/withStyles';
-import { cloneChildrenWithClassName } from '../utils/reactHelpers';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.styles = undefined;
 
-export const styles = {
+var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+var _ref;
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _withStyles = require('../styles/withStyles');
+
+var _withStyles2 = _interopRequireDefault(_withStyles);
+
+var _reactHelpers = require('../utils/reactHelpers');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var babelPluginFlowReactPropTypes_proptype_Node = require('react').babelPluginFlowReactPropTypes_proptype_Node || require('prop-types').any;
+
+var styles = exports.styles = {
   root: {
     height: 52,
     display: 'flex',
     alignItems: 'center',
-    padding: '2px 4px',
+    padding: '2px 4px'
   },
   actionSpacing: {
-    margin: '0 4px',
-  },
+    margin: '0 4px'
+  }
 };
 
-type DefaultProps = {
-  classes: Object,
-  disableActionSpacing: boolean,
+var babelPluginFlowReactPropTypes_proptype_Props = {
+  children: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node),
+  classes: require('prop-types').object,
+  className: require('prop-types').string,
+  disableActionSpacing: require('prop-types').bool
 };
 
-export type Props = {
-  /**
-   * The content of the component.
-   */
-  children?: Node,
-  /**
-   * Useful to extend the style applied to components.
-   */
-  classes?: Object,
-  /**
-   * @ignore
-   */
-  className?: string,
-  /**
-   * If `true`, the card actions do not have additional margin.
-   */
-  disableActionSpacing?: boolean,
-};
 
-type AllProps = DefaultProps & Props;
+function CardActions(props) {
+  var disableActionSpacing = props.disableActionSpacing,
+      children = props.children,
+      classes = props.classes,
+      className = props.className,
+      other = (0, _objectWithoutProperties3.default)(props, ['disableActionSpacing', 'children', 'classes', 'className']);
 
-function CardActions(props: AllProps) {
-  const { disableActionSpacing, children, classes, className, ...other } = props;
 
-  return (
-    <div className={classNames(classes.root, className)} {...other}>
-      {disableActionSpacing ? (
-        children
-      ) : (
-        cloneChildrenWithClassName(children, classes.actionSpacing)
-      )}
-    </div>
+  return _react2.default.createElement(
+    'div',
+    (0, _extends3.default)({ className: (0, _classnames2.default)(classes.root, className) }, other),
+    disableActionSpacing ? children : (0, _reactHelpers.cloneChildrenWithClassName)(children, classes.actionSpacing)
   );
 }
 
+CardActions.propTypes = process.env.NODE_ENV !== "production" ? (_ref = {
+  classes: require('prop-types').object.isRequired,
+  disableActionSpacing: require('prop-types').bool.isRequired,
+  children: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : require('prop-types').shape(babelPluginFlowReactPropTypes_proptype_Node)
+}, (0, _defineProperty3.default)(_ref, 'classes', require('prop-types').object), (0, _defineProperty3.default)(_ref, 'className', require('prop-types').string), (0, _defineProperty3.default)(_ref, 'disableActionSpacing', require('prop-types').bool), _ref) : {};
 CardActions.defaultProps = {
-  disableActionSpacing: false,
+  disableActionSpacing: false
 };
 
-export default withStyles(styles, { name: 'MuiCardActions' })(CardActions);
+exports.default = (0, _withStyles2.default)(styles, { name: 'MuiCardActions' })(CardActions);

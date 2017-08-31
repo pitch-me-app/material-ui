@@ -1,20 +1,31 @@
-// @flow weak
+'use strict';
 
-const BLACKLIST = ['template', 'script', 'style'];
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ariaHidden = ariaHidden;
+exports.hideSiblings = hideSiblings;
+exports.showSiblings = showSiblings;
+//  weak
 
-const isHidable = ({ nodeType, tagName }) =>
-  nodeType === 1 && BLACKLIST.indexOf(tagName.toLowerCase()) === -1;
+var BLACKLIST = ['template', 'script', 'style'];
 
-const siblings = (container, mount, cb) => {
+var isHidable = function isHidable(_ref) {
+  var nodeType = _ref.nodeType,
+      tagName = _ref.tagName;
+  return nodeType === 1 && BLACKLIST.indexOf(tagName.toLowerCase()) === -1;
+};
+
+var siblings = function siblings(container, mount, cb) {
   mount = [].concat(mount); // eslint-disable-line no-param-reassign
-  [].forEach.call(container.children, node => {
+  [].forEach.call(container.children, function (node) {
     if (mount.indexOf(node) === -1 && isHidable(node)) {
       cb(node);
     }
   });
 };
 
-export function ariaHidden(show, node) {
+function ariaHidden(show, node) {
   if (!node) {
     return;
   }
@@ -25,10 +36,14 @@ export function ariaHidden(show, node) {
   }
 }
 
-export function hideSiblings(container, mountNode) {
-  siblings(container, mountNode, node => ariaHidden(true, node));
+function hideSiblings(container, mountNode) {
+  siblings(container, mountNode, function (node) {
+    return ariaHidden(true, node);
+  });
 }
 
-export function showSiblings(container, mountNode) {
-  siblings(container, mountNode, node => ariaHidden(false, node));
+function showSiblings(container, mountNode) {
+  siblings(container, mountNode, function (node) {
+    return ariaHidden(false, node);
+  });
 }

@@ -1,7 +1,12 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 // Wait https://github.com/facebook/flow/issues/380 to be fixed
 /* eslint-disable flowtype/require-valid-file-annotation */
 
-const yellow = {
+var yellow = {
   50: '#fffde7',
   100: '#fff9c4',
   200: '#fff59d',
@@ -16,7 +21,7 @@ const yellow = {
   A200: '#ffff00',
   A400: '#ffea00',
   A700: '#ffd600',
-  contrastDefaultColor: 'dark',
+  contrastDefaultColor: 'dark'
 };
 
-export default yellow;
+exports.default = yellow;

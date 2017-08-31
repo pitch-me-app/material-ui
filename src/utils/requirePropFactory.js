@@ -1,19 +1,23 @@
-// @flow weak
+'use strict';
 
-const requirePropFactory = componentNameInError => {
-  const requireProp = requiredProp => (props, propName, componentName, location, propFullName) => {
-    const propFullNameSafe = propFullName || propName;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//  weak
 
-    if (typeof props[propName] !== 'undefined' && !props[requiredProp]) {
-      return new Error(
-        `The property \`${propFullNameSafe}\` of ` +
-          `\`${componentNameInError}\` must be used on \`${requiredProp}\`.`,
-      );
-    }
+var requirePropFactory = function requirePropFactory(componentNameInError) {
+  var requireProp = function requireProp(requiredProp) {
+    return function (props, propName, componentName, location, propFullName) {
+      var propFullNameSafe = propFullName || propName;
 
-    return null;
+      if (typeof props[propName] !== 'undefined' && !props[requiredProp]) {
+        return new Error('The property `' + propFullNameSafe + '` of ' + ('`' + componentNameInError + '` must be used on `' + requiredProp + '`.'));
+      }
+
+      return null;
+    };
   };
   return requireProp;
 };
 
-export default requirePropFactory;
+exports.default = requirePropFactory;

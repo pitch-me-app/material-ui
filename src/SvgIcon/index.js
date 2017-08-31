@@ -1,3 +1,16 @@
-// @flow
+'use strict';
 
-export { default } from './SvgIcon';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _SvgIcon = require('./SvgIcon');
+
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_SvgIcon).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

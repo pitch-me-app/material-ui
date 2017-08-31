@@ -1,30 +1,46 @@
-// @flow weak
+'use strict';
 
-import { unmountComponentAtNode } from 'react-dom';
-import { mount as enzymeMount } from 'enzyme';
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+exports.default = createMount;
+
+var _reactDom = require('react-dom');
+
+var _enzyme = require('enzyme');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Generate an enhanced mount function.
-export default function createMount(options: Object = {}) {
-  const { mount = enzymeMount } = options;
+//  weak
 
-  const attachTo = window.document.createElement('div');
+function createMount() {
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var _options$mount = options.mount,
+      mount = _options$mount === undefined ? _enzyme.mount : _options$mount;
+
+
+  var attachTo = window.document.createElement('div');
   attachTo.className = 'app';
   attachTo.setAttribute('id', 'app');
   window.document.body.insertBefore(attachTo, window.document.body.firstChild);
 
-  const mountWithContext = function mountWithContext(
-    node: React$Element<any>,
-    options2: Object = {},
-  ) {
-    return mount(node, {
-      attachTo,
-      ...options2,
-    });
+  var mountWithContext = function mountWithContext(node) {
+    var options2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    return mount(node, (0, _extends3.default)({
+      attachTo: attachTo
+    }, options2));
   };
 
   mountWithContext.attachTo = attachTo;
-  mountWithContext.cleanUp = () => {
-    unmountComponentAtNode(attachTo);
+  mountWithContext.cleanUp = function () {
+    (0, _reactDom.unmountComponentAtNode)(attachTo);
     attachTo.parentNode.removeChild(attachTo);
   };
 
